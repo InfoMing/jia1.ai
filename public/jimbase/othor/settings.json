@@ -1,0 +1,41 @@
+{
+  "workbench.colorTheme": "Default Light+",
+  "editor.fontSize": 16,
+  "editor.formatOnType": true,
+  "editor.formatOnSave": true,
+  "vetur.format.defaultFormatterOptions": {
+    "js-beautify-html": {
+      "wrap_line_length": 100,
+      "wrap_attributes": "auto",
+      "end_with_newline": false
+    }
+  },
+  "vetur.format.defaultFormatter.html": "js-beautify-html",
+  "explorer.confirmDelete": false,
+  "vetur.validation.template": false,
+  "eslint.autoFixOnSave": true,
+  "files.autoSave": "off",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "html",
+    {
+      "language": "vue",
+      "autoFix": true
+    }
+  ],
+  "eslint.options": {
+    "plugins": [
+      "html"
+    ]
+  }, //为了符合eslint的两个空格间隔原则
+  "editor.tabSize": 2,
+  "window.zoomLevel": 1,
+  "[javascript]": {
+    "editor.defaultFormatter": "HookyQR.beautify"
+  },
+  "beautify.config": {
+    "brace_style": "none,preserve-inline",
+    "indent_size": 2,
+  }
+}

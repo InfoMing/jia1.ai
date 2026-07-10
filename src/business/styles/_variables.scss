@@ -1,0 +1,57 @@
+// ============================================================
+// 前台同花顺风格 — 品牌色变量
+// 仅用于 views/business/ 下前台页面，不影响后台
+// ============================================================
+
+// -------- 品牌色 --------
+$brand-primary: #C62F2E;     // 同花顺红（主色）
+$brand-dark: #A82828;        // 深红（hover）
+$brand-light: #E84040;       // 亮红（轻量高亮）
+
+// -------- 语义色 --------
+$color-remind: #ff6b6b;               // 提醒色（主红变体，用于高亮提醒）
+$color-remind-bg: rgba(255,107,107,0.15); // 次要提醒背景（选中态、hover态）
+
+// -------- 涨跌色 --------
+$color-up: #DE2C2C;          // 涨（红）
+$color-down: #009944;        // 跌（绿）
+$color-up-bg: #FFF1F0;       // 涨背景
+$color-down-bg: #E8F8EF;     // 跌背景
+
+// -------- 中性色 --------
+$bg-page: #F5F6FA;           // 页面背景
+$bg-card: #FFFFFF;           // 卡片背景
+$bg-row-alt: #FAFAFA;        // 表格隔行
+$bg-hover: #F5F6FA;          // hover 态
+$border-color: #E4E6EB;      // 边框/分割线
+$border-light: #F0F0F0;      // 轻分割线
+
+// -------- 文字色阶 --------
+$text-primary: #1A1A1A;      // 主文字
+$text-secondary: #666666;    // 次要文字
+$text-muted: #999999;        // 辅助文字
+$text-disabled: #CCCCCC;     // 禁用文字
+$text-white: #FFFFFF;        // 白色文字
+
+// -------- 导航栏 --------
+$navbar-height: 60px;
+$navbar-accent: 3px solid $brand-primary;
+
+// -------- 布局 --------
+$content-max-width: 1300px;
+$card-radius: 4px;
+$card-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+$card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+// -------- 按钮 --------
+$btn-primary-bg: $brand-primary;
+$btn-primary-color: $text-white;
+$btn-primary-height: 40px;
+$btn-primary-radius: 4px;
+$btn-primary-font-size: 14px;
+
+// -------- 输入框 --------
+$input-height: 36px;
+$input-border: 1px solid #D9D9D9;
+$input-border-focus: 1px solid $brand-primary;
+$input-radius: 2px;

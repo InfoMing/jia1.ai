@@ -1,0 +1,29 @@
+/**
+* Element Plus 主题变量覆盖
+* 修改默认主题色为更深的蓝色，长期使用更舒适
+**/
+
+/* 主题色 */
+$--color-primary: #1890ff;
+$--color-success: #13ce66;
+$--color-warning: #ffba00;
+$--color-danger: #ff4949;
+
+$--button-font-weight: 400;
+
+$--border-color-light: #dfe4ed;
+$--border-color-lighter: #e6ebf5;
+
+$--table-border: 1px solid #dfe6ec;
+
+// Element Plus CSS Variables 覆盖
+:root {
+  --el-color-primary: #1890ff;
+  --el-color-success: #13ce66;
+  --el-color-warning: #ffba00;
+  --el-color-danger: #ff4949;
+}
+
+:export {
+  theme: $--color-primary;
+}
