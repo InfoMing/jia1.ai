@@ -10,5 +10,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-$bg: #2d3a4b;
+#app {
+  width: 100%;
+  min-height: 100vh;
+}
 </style>

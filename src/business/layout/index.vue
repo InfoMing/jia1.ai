@@ -1,74 +1,48 @@
 <template>
-  <div class="business-theme business-layout">
-    <business-navbar />
-    <div class="business-content">
-      <router-view />
-    </div>
-    <business-footer />
+  <div class="si-site-layout">
+    <SiteHeader :session="session" @login="openLogin" @logout="logout" />
+    <main class="si-site-layout__content"><RouterView /></main>
+    <SiteFooter />
+    <AuthDialog :open="loginOpen" @close="loginOpen = false" @success="loginSuccess" />
   </div>
 </template>
 
-<script>
-import BusinessNavbar from './Navbar.vue'
-import BusinessFooter from './Footer.vue'
+<script setup>
+import { onMounted, provide, ref } from 'vue'
+import { RouterView, useRouter } from 'vue-router'
+import 'element-plus/dist/index.css'
+import '@/business/styles/base/index.scss'
+import SiteHeader from '@/business/layout/components/SiteHeader.vue'
+import SiteFooter from '@/business/layout/components/SiteFooter.vue'
+import AuthDialog from '@/business/layout/components/AuthDialog.vue'
+import { businessApi } from '@/business/api'
+import { SITE_SHELL_KEY } from '@/business/composables/useSiteShell'
 
-export default {
-  name: 'BusinessLayout',
-  components: { BusinessNavbar, BusinessFooter }
+const router = useRouter()
+const session = ref(null)
+const loginOpen = ref(false)
+const pendingRoute = ref(null)
+
+const openLogin = route => { pendingRoute.value = route || null; loginOpen.value = true }
+const loginSuccess = user => {
+  session.value = user
+  loginOpen.value = false
+  if (pendingRoute.value) router.push(pendingRoute.value)
+  pendingRoute.value = null
 }
+const logout = async () => { await businessApi.logout(); session.value = null }
+
+// 公共布局向页面提供统一登录入口，避免页面组件直接操作登录弹层。
+provide(SITE_SHELL_KEY, { session, openLogin })
+
+onMounted(async () => {
+  localStorage.removeItem('superi-demo:locale')
+  session.value = await businessApi.getSession()
+})
 </script>
 
 <style lang="scss" scoped>
-.business-theme.business-layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background: #fff;
-}
-.business-content {
-  flex: 1;
-  background: #f5f6fa;
-  display: flex;
-  flex-direction: column;
-}
-/* router-view 渲染的子页面撑满容器 */
-.business-content > * {
-  flex: 1;
-  min-height: 0;
-}
-</style>
-
-<style lang="scss">
-/* 滚动条（非 scoped，确保对所有浏览器生效） */
-/* 注：Chrome 121+ 废弃了 html/body 的 ::-webkit-scrollbar，改用标准属性 */
-html::-webkit-scrollbar,
-body::-webkit-scrollbar,
-.business-theme::-webkit-scrollbar,
-.business-theme ::-webkit-scrollbar {
-  width: 6px; height: 6px;
-}
-html::-webkit-scrollbar-track,
-body::-webkit-scrollbar-track,
-.business-theme::-webkit-scrollbar-track,
-.business-theme ::-webkit-scrollbar-track {
-  background: transparent;
-}
-html::-webkit-scrollbar-thumb,
-body::-webkit-scrollbar-thumb,
-.business-theme::-webkit-scrollbar-thumb,
-.business-theme ::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.12);
-  border-radius: 3px;
-}
-html::-webkit-scrollbar-thumb:hover,
-body::-webkit-scrollbar-thumb:hover,
-.business-theme::-webkit-scrollbar-thumb:hover,
-.business-theme ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0,0,0,0.25);
-}
-/* 标准属性：对所有浏览器生效（Chrome 121+, Firefox, Edge） */
-html, body, .business-theme, .business-theme * {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(0,0,0,0.12) transparent;
-}
+.si-site-layout { min-height: 100vh; padding-top: 70px; overflow: clip; background: #fff; }
+.si-site-layout__content { min-height: calc(100vh - 70px); }
+@media (max-width: 1099px) { .si-site-layout { padding-top: 106px; }.si-site-layout__content { min-height: calc(100vh - 106px); } }
 </style>

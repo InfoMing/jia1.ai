@@ -1,0 +1,461 @@
+body {
+    font-family: "Inter", sans-serif;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+#modelViewer {
+    width: 50vw;
+    height: 42vw;
+    position: absolute;
+    right: -4vw;
+    top: 10vh;
+    z-index: 2;
+}
+
+.Hotspot {
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.35);
+    padding: 0.833vw 1.041vw;
+    border: none;
+    color: #fff;
+    opacity: 0;
+    font-size: 0.833vw;
+}
+
+.Hotspot[data-visible] {
+    opacity: 1;
+}
+
+.Hotspot::before {
+    content: '';
+    display: block;
+    width: 1.25vw;
+    height: 1.25vw;
+    margin-right: 0.625vw;
+    background: url("/bpsf/img/icon-add.svg") no-repeat center/contain;
+}
+
+.Hotspot.on {
+    transition: all ease .3s;
+    opacity: 0;
+}
+
+.progress-bar {
+    display: none;
+}
+
+.bhome-full {
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.bhome1 {}
+
+.bhome1 .zuo {
+    width: 44.375vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-left: 4.166vw;
+    padding: 0 0 7.291vw;
+    position: relative;
+    z-index: 5;
+}
+
+.bhome1 .zuo .t1 {
+    letter-spacing: -0.033vw;
+    margin-bottom: 2.187vw;
+}
+
+.bhome1 .zuo .t1 span {
+    color: rgba(56, 56, 56, 0.40);
+    font-weight: 300;
+}
+
+.bhome1 .zuo .bhome1-btn {
+    padding: 0.885vw 1.25vw 0.885vw 1.093vw;
+    border-radius: 8px;
+    background: #D4FE94;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-right: 1.718vw;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.bhome1 .zuo .bhome1-btn:hover {
+    background: #000;
+    color: #fff;
+}
+
+.bhome1 .zuo .bhome1-btn:hover svg path {
+    fill: #fff;
+}
+
+.bhome1 .zuo .bhome1-btn svg {
+    width: 1.25vw;
+    margin-left: 1.458vw;
+}
+
+.bhome1 .zuo .bhome1-btn svg path {
+    transition: fill 0.3s ease;
+}
+
+.bhome1 .zuo .t3 {
+    color: rgba(56, 56, 56, 0.40);
+}
+
+.grid-svg {
+    width: 50.104vw;
+    height: 50.104vw;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.bhome1 .you {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    margin: 0 8.02vw 8.333vw 0;
+}
+
+.bhome1 .you .swiper {
+    width: 18.75vw;
+}
+
+.bhome1 .you .swiper .sec1 {
+    padding: 0.833vw;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.35);
+    color: rgba(255, 255, 255, 0.68);
+    letter-spacing: 0.037vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bhome1 .you .swiper .swiper-pagination {
+    width: auto;
+    position: static;
+    text-align: right;
+}
+
+.bhome1 .swiper-pagination-bullet {
+    width: 0.416vw;
+    height: 0.416vw;
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.24);
+    opacity: 1;
+    position: relative;
+    transition: all ease .3s;
+}
+
+.bhome1 .swiper-pagination-bullet-active {
+    width: 2.083vw;
+    background: #fff;
+    opacity: 1;
+}
+
+.bhome1 .you .swiper .ul {
+    margin-top: 1.145vw;
+    padding: 0.833vw;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.35);
+}
+
+.bhome1 .you .swiper .ul .li {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    color: rgba(255, 255, 255, 0.68);
+    letter-spacing: 0.037vw;
+    padding-bottom: 0.416vw;
+    margin-bottom: 0.416vw;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.bhome1 .you .swiper .ul .li:nth-last-child {
+    padding-bottom: 0.416vw;
+    margin-bottom: 0.416vw;
+
+}
+
+.bhome2 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 6;
+    padding: 0 5.729vw;
+}
+
+.bhome2 .zuo {
+    color: #FFF;
+    width: 41.458vw;
+    opacity: 0;
+}
+
+.bhome2 .zuo .t2 {
+    margin-top: 2.291vw;
+    font-weight: 300;
+}
+
+.bhome2 .zuo .t3 {
+    margin-top: 0.833vw;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.bhome2 .zuo .bhome2-btn {
+    width: max-content;
+    padding: 0.52vw 0.833vw;
+    margin-top: 1.666vw;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.38);
+    backdrop-filter: blur(0.156vw);
+}
+.bhome2 .zuo .bhome2-btn:hover{
+    background: var(--secondary);
+}
+
+.bhome2 .you {
+    width: 31.77vw;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+}
+
+.bhome2 .you video {
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.bhome2 .you .sec2 {
+    margin-top: 0.52vw;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.35);
+    padding: 0.833vw 1.875vw 1.666vw 0.781vw;
+    margin-left: auto;
+    transition: all 0.3s ease;
+}
+
+.bhome2 .you .sec2:hover {
+    background: rgba(0, 0, 0, 0.6);
+    transform: translateY(-2px)
+}
+
+.bhome2 .you .sec2 .icon {
+    width: 4.687vw;
+    margin-bottom: 1.25vw;
+    transition: transform 0.3s ease;
+}
+
+.bhome2 .you .sec2:hover .icon {
+    transform: scale(1.05);
+}
+
+/* 
+*======================================================media=
+*/
+@media screen and (max-width:768px) {
+    #modelViewer {
+        width: 100vw;
+        height: 98vw;
+        right: 0;
+    }
+
+    .Hotspot {
+        display: flex;
+        border-radius: 10px;
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    .Hotspot::before {
+        width: 12px;
+        height: 12px;
+        margin-right: 6px;
+    }
+
+    .bhome-full {
+        height: 100vh;
+    }
+
+    .bhome1 .zuo {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        margin-left: 0;
+        padding: 0 5% 50px;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: auto;
+    }
+
+    .bhome1 .zuo .t1 {
+        letter-spacing: -0.64px;
+        margin-bottom: 21px;
+        font-size: 34px;
+    }
+
+    .bhome1 .zuo .bhome1-btn {
+        padding: 9px 12px 9px 11px;
+        border-radius: 8px;
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: 17px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .bhome1 .zuo .bhome1-btn:hover {
+        background: #000;
+        color: #fff;
+    }
+
+    .bhome1 .zuo .bhome1-btn:hover svg path {
+        fill: #fff;
+    }
+
+    .bhome1 .zuo .bhome1-btn svg {
+        width: 12px;
+        margin-left: 14px;
+    }
+
+    .bhome1 .zuo .bhome1-btn svg path {
+        transition: fill 0.3s ease;
+    }
+    
+
+.bhome1 .zuo .t3 {
+    font-size:12px;
+}
+
+    .grid-svg {
+        width: 100%;
+        height: auto;
+        left: 50%;
+        top: auto;
+        bottom:0;
+        transform: translate(-50%, 0);
+    }
+
+    .bhome1 .you {
+        margin: 0 77px 80px 0;
+        display: none;
+    }
+
+    .bhome1 .you .swiper {
+        width: 180px;
+    }
+
+    .bhome1 .you .swiper .sec1 {
+        padding: 8px;
+        border-radius: 10px;
+        letter-spacing: 0.72px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .bhome1 .swiper-pagination-bullet {
+        width: 4px;
+        height: 4px;
+        border-radius: 8px;
+    }
+
+    .bhome1 .swiper-pagination-bullet-active {
+        width: 20px;
+    }
+
+    .bhome1 .you .swiper .ul {
+        margin-top: 11px;
+        padding: 8px;
+        border-radius: 10px;
+    }
+
+    .bhome1 .you .swiper .ul .li {
+        display: flex;
+        flex-wrap: wrap;
+        letter-spacing: 0.72px;
+        padding-bottom: 4px;
+        margin-bottom: 4px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .bhome1 .you .swiper .ul .li:nth-last-child {
+        padding-bottom: 4px;
+        margin-bottom: 4px;
+    }
+
+    .bhome2 {
+        width: 100%;
+        padding: 0 5%;
+    }
+
+    .bhome2 .zuo {
+        width: 100%;
+    }
+
+    .bhome2 .zuo .t2 {
+        margin-top: 22px;
+    }
+
+    .bhome2 .zuo .t3 {
+        margin-top: 8px;
+    }
+
+    .bhome2 .zuo .bhome2-btn {
+        padding: 5px 8px;
+        margin-top: 16px;
+        border-radius: 8px;
+        backdrop-filter: blur(2px);
+    }
+
+    .bhome2 .you {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .bhome2 .you video {
+        border-radius: 10px;
+    }
+
+    .bhome2 .you .sec2 {
+        margin-top: 5px;
+        border-radius: 10px;
+        padding: 8px 18px 16px 8px;
+        transition: all 0.3s ease;
+    }
+
+    .bhome2 .you .sec2:active {
+        background: rgba(0, 0, 0, 0.6);
+        transform: scale(0.98);
+    }
+
+    .bhome2 .you .sec2 .icon {
+        width: 88px;
+        margin-bottom: 12px;
+        transition: transform 0.3s ease;
+    }
+
+    .bhome2 .you .sec2:active .icon {
+        transform: scale(1.05);
+    }
+}

@@ -45,16 +45,15 @@ export default defineConfig(({ mode }) => {
 
     // 生产构建配置
     build: {
-      outDir: resolve(__dirname, '..', 'web-deploy', 'dist', 'docs'),
+      // 构建产物必须留在 new 目录中，避免影响工作区中的其他项目。
+      outDir: resolve(__dirname, 'dist'),
       assetsDir: 'static',
       sourcemap: false,
       rollupOptions: {
         output: {
           manualChunks: {
-            // 将 Element Plus 单独打包为一个 chunk
-            'element-plus': ['element-plus'],
             // 将 Vue 运行时单独打包
-            vue: ['vue', 'vue-router', 'pinia'],
+            vue: ['vue', 'vue-router'],
           },
         },
       },
