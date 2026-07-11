@@ -1,16 +1,12 @@
-@use './tokens' as *;
-
 html.si-overlay-open { overflow: hidden; }
 html, body, #app { margin: 0; min-height: 100%; }
 body { overflow-x: hidden; }
-.si-dialog .el-dialog__header { padding-bottom: 12px; }
-.si-dialog .el-dialog__title { font-weight: 700; }
 
 .si-page, .si-page * { box-sizing: border-box; }
 .si-page {
   min-height: 100vh;
-  color: $ink;
-  background: $page;
+  color: #070707;
+  background: #fff;
   font-family: Poppins, Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
   -webkit-font-smoothing: antialiased;
 }

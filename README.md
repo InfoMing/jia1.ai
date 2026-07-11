@@ -1,158 +1,168 @@
-# Web — 管理系统前端
+# 刺猬星球 Super-i
 
-## 项目简介
+## 项目介绍
 
-web 是管理系统的前端界面，基于 Vue 3 + Element Plus 技术栈构建，提供用户管理、角色权限、菜单配置、系统监控等管理功能的可视化操作界面，原项目基于 https://panjiachen.github.io/vue-element-admin-site 改版。
+刺猬星球 Super-i 是一个基于 Vue 3 构建的轻量品牌网站。目前项目只保留品牌首页和 AI 提示词页面，不包含后台管理、登录注册、后端 API、Mock 数据、支付、工单或旧站兼容代码。
 
-本仓库为前端项目，需配合后端 `admin/` 项目一起使用。
+项目采用组件化结构组织首页内容，所有图片、视频和图标均由源码目录本地管理，不依赖旧 HTML、jQuery、Swiper、GSAP 或线上静态资源。
+
+## 主要功能
+
+- 品牌首页：视频 Hero、品牌宣传片、适用岗位、职业定位和社群展示。
+- AI 提示词：通用、图像、视频、营销四类静态提示词。
+- 提示词复制：使用浏览器 Clipboard API，一键复制提示词内容。
+- 响应式布局：适配桌面、平板和移动端。
+- 极简导航：只保留品牌 Logo 和 AI 提示词入口。
+- 原生视频弹层：使用 Vue Teleport 实现，不依赖 UI 组件库。
 
 ## 技术栈
 
-| 技术 | 版本 | 说明 |
-|------|------|------|
-| Vue | 3.5.39 | 前端框架 |
-| Vite | 6.4.3 | 项目脚手架 / 构建工具 |
-| Vue Router | 4.5.2 | 路由管理 |
-| Pinia | 3.0.2 | 状态管理 |
-| Element Plus | 2.9.6 | UI 组件库 |
-| Axios | 1.7.9 | HTTP 请求库 |
-| SCSS | — | 样式预处理 |
+| 技术 | 用途 |
+| --- | --- |
+| Vue 3 | 页面与组件开发 |
+| Vue Router 4 | 前端路由和页面标题管理 |
+| Vite 6 | 开发服务器与生产构建 |
+| SCSS | 组件和公共样式 |
+| Vitest | 单元测试 |
+| Vue Test Utils | Vue 组件测试 |
+| Playwright | 多视口端到端测试 |
+| ESLint | 代码规范检查 |
 
-## 环境要求
+生产环境依赖仅包含 `vue` 和 `vue-router`。
 
-### Node.js
+## 页面路由
 
-- **推荐版本**：v22.23.x (LTS)
-- **最低要求**：>= 22.0.0
-- **下载地址**：https://nodejs.org/zh-cn/download/
-- **验证安装**：
-  ```bash
-  node -v    # 应显示 v22.x.x
-  npm -v     # 应显示 10.x.x
-  ```
+| 地址 | 路由名称 | 内容 |
+| --- | --- | --- |
+| `/` | `Home` | 品牌首页 |
+| `/ai-prompts` | `AiPrompts` | 静态 AI 提示词列表 |
 
-> 建议使用 [nvm](https://github.com/nvm-sh/nvm) 管理 Node.js 版本，方便切换。
-
-## 快速开始
-
-### 第 1 步：克隆代码
-
-```bash
-git clone <仓库地址>
-cd <项目目录>/web
-```
-
-### 第 2 步：安装依赖
-
-```bash
-npm install
-```
-
-> 若安装缓慢，可使用淘宝镜像源：
-> ```bash
-> npm install --registry=https://registry.npmmirror.com
-> ```
-
-### 第 3 步：配置后端接口地址
-
-在 `src/admin/constants/settings.js` 中可以配置应用的标题等基本设置，后端 API 地址则在 `.env.*` 文件中配置。
-
-开发环境默认的后端地址为 `http://localhost:8000/api/v1`，如需修改，编辑 `.env.development`：
-
-```
-VITE_APP_BASE_API = 'http://localhost:8000/api/v1'
-```
-
-### 第 4 步：启动开发服务器
-
-```bash
-npm run dev
-```
-
-启动后默认访问：**http://localhost:9527**
-
-> 如需修改端口，可通过命令行指定：
-> ```bash
-> npm run dev -- --port 3000
-> ```
-
-### 第 5 步：验证启动
-
-浏览器打开 http://localhost:9527 ，应看到登录页面。
-
-确保后端 `admin` 项目已启动，前端才能正常请求 API 数据。
-
-## 生产构建
-
-```bash
-npm run build
-```
-
-构建产物输出到 `../web-deploy/dist/docs/` 目录（可在 `vite.config.ts` 中配置）。
-
-其他构建模式：
-
-```bash
-npm run build:stage        # 预发布环境构建
-```
+其他地址会统一重定向到首页。
 
 ## 目录结构
 
-```
-web/
-├── index.html                 # 页面入口
-├── package.json               # 项目依赖与脚本
-├── vite.config.ts             # Vite 构建配置
-├── env.d.ts                   # 环境变量类型声明
-├── .env.development           # 开发环境变量
-├── .env.production            # 生产环境变量
-├── .env.staging               # 预发布环境变量
-├── public/                    # 静态资源（不经过构建处理）
-│   └── img/                   #   图片资源
-└── src/
-    ├── main.js                # 应用入口
-    ├── App.vue                # 根组件
-    ├── permission.js          # 路由守卫（权限控制）
-    ├── admin/                 # 后台管理模块
-    │   ├── api/               #   API 接口
-    │   ├── components/        #   通用组件（BaseTable、BaseTree 等）
-    │   ├── constants/         #   常量配置
-    │   ├── layout/            #   后台布局（侧边栏 + 顶部导航）
-    │   ├── store/             #   Pinia 状态模块
-    │   ├── styles/            #   后台样式（SCSS）
-    │   └── views/             #   后台页面
-    ├── business/              # 前台业务模块
-    │   ├── api/               #   API 接口
-    │   ├── components/        #   业务组件（BizTable）
-    │   ├── layout/            #   前台布局
-    │   ├── styles/            #   前台样式
-    │   └── views/             #   前台页面
-    ├── common/                # 双方共享的工具
-    │   ├── filters/           #   过滤器函数
-    │   └── utils/             #   工具函数（axios、用户、验证等）
-    ├── router/                # 路由配置
-    │   ├── index.js           #   路由入口
-    │   ├── admin.js           #   后台路由
-    │   └── business.js        #   前台路由
-    └── store/                 # Pinia 状态管理入口
+```text
+.
+├── src/                         # 应用源码
+│   ├── business/                # 前台业务模块
+│   │   ├── assets/              # 本地图片、视频和 SVG 资源
+│   │   │   ├── home/            # 首页专用资源
+│   │   │   │   ├── icons/       # 岗位卡片图标与装饰 SVG
+│   │   │   │   └── media/       # Hero 视频
+│   │   │   └── shared/          # Logo、favicon 等公共资源
+│   │   ├── composables/         # 可复用 Vue 组合式逻辑
+│   │   ├── config/              # 首页静态内容与资源映射
+│   │   ├── layout/              # 公共页面布局
+│   │   │   └── components/      # 导航栏和页脚
+│   │   ├── styles/              # 全局基础样式与 SCSS mixin
+│   │   └── views/               # 页面级视图
+│   │       ├── home/             # 首页及首页专用组件
+│   │       └── ai-prompts/       # AI 提示词页面
+│   ├── router/                  # Vue Router 配置
+│   ├── App.vue                  # 根组件
+│   └── main.js                  # Vue 应用入口
+├── tests/                       # 自动化测试
+│   ├── unit/                    # Vitest 单元测试
+│   └── e2e/                     # Playwright 端到端测试
+├── index.html                   # Vite HTML 入口及 favicon 配置
+├── vite.config.ts               # Vite 开发与构建配置
+├── vitest.config.js             # Vitest 配置
+├── playwright.config.js         # Playwright 视口与预览服务配置
+├── eslint.config.mjs            # ESLint 配置
+├── jsconfig.json                # 编辑器路径别名配置
+├── package.json                 # 项目脚本、依赖和 Node 版本要求
+├── package-lock.json            # npm 依赖锁文件
+├── CNAME                        # 静态站点自定义域名配置
+└── 约束.md                      # 项目级编码约束
 ```
 
-## 环境变量说明
+## 各目录说明
 
-| 文件 | 用途 | 默认 API 地址 |
-|------|------|--------------|
-| `.env.development` | 本地开发环境 | http://localhost:8000/api/v1 |
-| `.env.production` | 生产环境 | http://doudouxz.top:9000/api/v1 |
-| `.env.staging` | 预发布环境 | 按需配置 |
+### `src/`
 
-> 环境变量命名规则：Vite 要求以 `VITE_` 开头才能在客户端代码中访问（通过 `import.meta.env.VITE_*`）。
+项目的全部可维护源码。入口文件 `main.js` 创建 Vue 应用、注册 Router，并挂载根组件；`App.vue` 只负责渲染当前路由页面。
+
+### `src/business/`
+
+前台功能的主体目录，只包含当前网站实际使用的首页、AI 提示词、公共布局、样式和资源。
+
+- `assets/`：源码直接引用的本地资源。
+  - `home/`：Hero 视频和封面、品牌展示图、职业定位图、社群二维码及岗位图标。
+  - `shared/`：导航 Logo 和网站 favicon。
+- `composables/`：弹层打开、关闭、ESC 响应、滚动锁定和焦点恢复逻辑。
+- `config/`：统一维护首页数字、岗位配置及资源导入映射。
+- `layout/`：所有页面共享的外壳。
+  - `components/SiteHeader.vue`：Logo 和 AI 提示词导航。
+  - `components/SiteFooter.vue`：版权信息和回到顶部。
+- `styles/base/`：页面重置、公共排版和内容容器 mixin。
+- `views/home/`：品牌首页。
+  - `components/HomeHero.vue`：视频首屏和社群卡片。
+  - `components/BrandShowcase.vue`：品牌宣传片入口。
+  - `components/AudienceSection.vue`：适用岗位卡片。
+  - `components/CareerSection.vue`：职业定位内容。
+  - `components/CommunitySection.vue`：社群宣传模块。
+  - `components/VideoDialog.vue`：原生 Vue 视频弹层。
+- `views/ai-prompts/`：AI 提示词分类、卡片、复制功能和轻量提示消息。
+
+### `src/router/`
+
+- `index.js`：创建 HTML5 History Router，并在路由切换后更新页面标题。
+- `business.js`：定义首页、AI 提示词和未知地址回首页规则。
+
+### `tests/`
+
+- `unit/`：验证路由数量、未知地址规则、提示词分类和复制失败提示。
+- `e2e/`：验证导航、首页死链、提示词切换与复制、旧地址回首页。
+
+Playwright 默认覆盖以下视口：
+
+- `1440 × 900`
+- `1024 × 768`
+- `390 × 844`
+- `375 × 812`
+
+### `dist/`
+
+执行 `npm run build` 后生成的生产构建目录，不提交源码修改。部署时使用该目录内容。
+
+### `node_modules/`
+
+执行 `npm install` 后生成的依赖目录，由 npm 管理，不提交到 Git。
+
+### `.idea/`
+
+本地 IDE 配置目录，不属于业务代码。
+
+## 环境要求
+
+- Node.js `>= 22.0.0`
+- npm `>= 10.0.0`
+
+## 安装与启动
+
+```bash
+npm install
+npm run dev
+```
+
+开发服务器默认地址：`http://localhost:9527`。
 
 ## 常用命令
 
 | 命令 | 说明 |
-|------|------|
-| `npm run dev` | 启动开发服务器 |
-| `npm run build` | 生产环境构建 |
-| `npm run build:stage` | 预发布环境构建 |
-| `npm run preview` | 预览构建产物 |
-| `npm run lint` | 代码检查 |
+| --- | --- |
+| `npm run dev` | 启动 Vite 开发服务器 |
+| `npm run build` | 构建生产版本到 `dist/` |
+| `npm run preview` | 本地预览生产构建 |
+| `npm run lint` | 检查业务源码、路由和测试代码 |
+| `npm run lint:fix` | 自动修复可修复的 ESLint 问题 |
+| `npm run test:unit` | 运行 Vitest 单元测试 |
+| `npm run test:e2e` | 运行 Playwright 响应式端到端测试 |
+
+## 开发约定
+
+- 使用单引号、无分号和 2 空格缩进。
+- 站内导航必须使用 Vue Router 命名路由。
+- 页面样式使用 scoped SCSS 和 `si-` 命名空间。
+- 页面资源必须放入 `src/business/assets` 并通过模块导入。
+- 禁止重新引入 legacy HTML、旧 CSS/JS、账户系统、API 或 Mock 层。

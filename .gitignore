@@ -9,3 +9,6 @@
 /.idea/
 /node_modules/
 /dist/
+/test-results/
+.DS_Store
+/test*/

@@ -1,7 +1,7 @@
 {
-  "name": "new",
+  "name": "super-i",
   "version": "1.0.1",
-  "description": "基于 Vue SpringBoot 的 WEB管理系统",
+  "description": "刺猬星球 Super-i 极简前台",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -16,15 +16,6 @@
     "test:e2e:update": "playwright test --update-snapshots"
   },
   "dependencies": {
-    "axios": "^1.7.9",
-    "element-plus": "^2.9.6",
-    "fuse.js": "^7.0.0",
-    "js-cookie": "^3.0.5",
-    "normalize.css": "^8.0.1",
-    "nprogress": "^0.2.0",
-    "path-to-regexp": "^6.3.0",
-    "pinia": "^3.0.2",
-    "screenfull": "^6.0.2",
     "vue": "^3.5.39",
     "vue-router": "^4.5.2"
   },
@@ -34,47 +25,10 @@
     "@vue/test-utils": "^2.4.11",
     "eslint": "^9.22.0",
     "eslint-plugin-vue": "^9.32.0",
-    "fast-glob": "^3.3.3",
     "jsdom": "^29.1.1",
     "sass": "^1.83.4",
     "vite": "^6.3.2",
-    "vite-plugin-svg-icons": "^2.0.1",
     "vitest": "^4.1.10"
-  },
-  "//": {
-    "dependencies": {
-      "axios": "HTTP 请求库，封装了请求/响应拦截器、token 注入、统一错误处理（用于调用后端 API）",
-      "element-plus": "Element Plus UI 组件库，提供 el-table、el-form、el-dialog 等企业级组件（对应 Vue 2 的 element-ui）",
-      "fuse.js": "模糊搜索库，用于 HeaderSearch 组件中的菜单搜索匹配",
-      "js-cookie": "浏览器 Cookie 读写工具，用于持久化侧边栏状态、用户设置等",
-      "normalize.css": "CSS 样式重置，统一不同浏览器的默认样式差异",
-      "nprogress": "顶部加载进度条，用于路由跳转时显示加载进度（在 permission.js 路由守卫中触发）",
-      "path-to-regexp": "路径正则匹配工具，用于 Breadcrumb 面包屑组件的路径编译",
-      "pinia": "Vue 3 官方状态管理库，替代 Vuex，管理 app/settings/user/tagsView 等全局状态",
-      "screenfull": "全屏 API 封装，用于全屏切换组件（Screenfull）",
-      "vue": "Vue 3 前端框架",
-      "vue-router": "Vue 3 官方路由管理，定义前台 /b/* 和后台 /admin/* 路由结构"
-    },
-    "devDependencies": {
-      "@vitejs/plugin-vue": "Vite 插件，编译 Vue 3 单文件组件（SFC）",
-      "eslint": "JavaScript 代码检查工具，确保代码风格一致",
-      "eslint-plugin-vue": "Vue 文件专属 ESLint 规则",
-      "fast-glob": "文件系统 glob 匹配，vite-plugin-svg-icons 的构建时依赖",
-      "sass": "SCSS 预处理器编译（Dart Sass），编译项目中的 .scss 样式文件",
-      "vite": "构建工具（替代 Vue CLI + Webpack），提供极速热更新和生产打包",
-      "vite-plugin-svg-icons": "Vite 插件，将 SVG 图标自动注册为 <svg-icon> 组件"
-    },
-    "engines": {
-      "node": "Node.js 运行时版本要求 >= 22.0.0",
-      "npm": "npm 包管理器版本要求 >= 10.0.0"
-    },
-    "scripts": {
-      "dev": "启动 Vite 开发服务器（热更新）",
-      "build": "生产环境构建（输出到 web-deploy/dist/docs/）",
-      "build:stage": "预发布环境构建（读取 .env.staging 中的环境变量）",
-      "preview": "预览本地构建产物",
-      "lint": "运行 ESLint 检查 src 目录下的 .vue 和 .js 文件"
-    }
   },
   "engines": {
     "node": ">=22.0.0",

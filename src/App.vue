@@ -1,17 +1,7 @@
 <template>
-  <div id="app">
-    <router-view />
-  </div>
+  <RouterView />
 </template>
 
-<script>
-export default {
-  name: "App",
-};
+<script setup>
+import { RouterView } from 'vue-router'
 </script>
-<style lang="scss" scoped>
-#app {
-  width: 100%;
-  min-height: 100vh;
-}
-</style>
