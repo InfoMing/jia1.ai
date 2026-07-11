@@ -1,7 +1,7 @@
 {
-  "name": "super-i",
+  "name": "jia1-ai",
   "version": "1.0.1",
-  "description": "刺猬星球 Super-i 极简前台",
+  "description": "Jia1.ai AI 创意学习与灵感平台",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

@@ -1,6 +1,13 @@
-@mixin container { width: min(90.625vw, 1160px); margin-inline: auto; }
+// 除全宽视觉区外，页面、导航、页脚和内容栏目统一使用这一容器宽度。
+@mixin container {
+  width: 89.583vw;
+  margin-inline: auto;
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
+}
 @mixin pill { border: 1px solid rgba(7, 7, 7, .14); border-radius: 999px; background: #fff; }
 @mixin mobile { @media (max-width: 768px) { @content; } }
 @mixin tablet { @media (min-width: 769px) and (max-width: 1099px) { @content; } }
 @mixin clamp($lines: 2) { display: -webkit-box; -webkit-line-clamp: $lines; -webkit-box-orient: vertical; overflow: hidden; }
-

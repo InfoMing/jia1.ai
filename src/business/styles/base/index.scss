@@ -1,18 +1,18 @@
-html.si-overlay-open { overflow: hidden; }
+html.ji-overlay-open { overflow: hidden; }
 html, body, #app { margin: 0; min-height: 100%; }
 body { overflow-x: hidden; }
 
-.si-page, .si-page * { box-sizing: border-box; }
-.si-page {
+.ji-page, .ji-page * { box-sizing: border-box; }
+.ji-page {
   min-height: 100vh;
   color: #070707;
   background: #fff;
   font-family: Poppins, Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
-.si-page button, .si-page input, .si-page textarea, .si-page select { font: inherit; }
-.si-page button, .si-page a { -webkit-tap-highlight-color: transparent; }
-.si-page a { color: inherit; text-decoration: none; }
-.si-page img, .si-page video { max-width: 100%; }
-.si-page h1, .si-page h2, .si-page h3, .si-page p { margin: 0; }
-.si-page ul { margin: 0; padding: 0; list-style: none; }
+.ji-page button, .ji-page input, .ji-page textarea, .ji-page select { font: inherit; }
+.ji-page button, .ji-page a { -webkit-tap-highlight-color: transparent; }
+.ji-page a { color: inherit; text-decoration: none; }
+.ji-page img, .ji-page video { max-width: 100%; }
+.ji-page h1, .ji-page h2, .ji-page h3, .ji-page p { margin: 0; }
+.ji-page ul { margin: 0; padding: 0; list-style: none; }

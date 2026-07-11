@@ -1,13 +1,13 @@
 <template>
-  <section class="si-prompts si-page">
-    <header class="si-prompts__hero">
+  <section class="ji-prompts ji-page">
+    <header class="ji-prompts__hero">
       <span>AI PROMPT LIBRARY</span>
       <h1>AI提示词</h1>
       <p>从灵感到成品，选择场景并复制提示词，快速开始你的 AI 创作。</p>
     </header>
 
-    <div class="si-prompts__content">
-      <nav class="si-prompts__filters" aria-label="提示词分类">
+    <div class="ji-prompts__content">
+      <nav class="ji-prompts__filters" aria-label="提示词分类">
         <button
           v-for="category in categories"
           :key="category.key"
@@ -19,8 +19,8 @@
         </button>
       </nav>
 
-      <div class="si-prompts__grid">
-        <article v-for="prompt in visiblePrompts" :key="prompt.title" class="si-prompt-card">
+      <div class="ji-prompts__grid">
+        <article v-for="prompt in visiblePrompts" :key="prompt.title" class="ji-prompt-card">
           <div><span>{{ prompt.categoryLabel }}</span><b>{{ prompt.index }}</b></div>
           <h2>{{ prompt.title }}</h2>
           <p>{{ prompt.content }}</p>
@@ -28,13 +28,14 @@
         </article>
       </div>
     </div>
-    <div v-if="toast" class="si-prompts__toast" role="status" aria-live="polite">{{ toast }}</div>
+    <div v-if="toast" class="ji-prompts__toast" role="status" aria-live="polite">{{ toast }}</div>
   </section>
 </template>
 
 <script setup>
 import { computed, onBeforeUnmount, ref } from 'vue'
 
+// 分类 key 与提示词数据中的 category 对应，用于纯前端筛选。
 const categories = [
   { key: 'general', label: '通用' },
   { key: 'image', label: '图像' },
@@ -60,12 +61,15 @@ const prompts = [
 const activeCategory = ref('general')
 const toast = ref('')
 let toastTimer
+
+// 当前分类变化时重新生成序号和中文分类名称，不复制保存派生数据。
 const visiblePrompts = computed(() => prompts
   .filter(prompt => prompt.category === activeCategory.value)
   .map((prompt, index) => ({ ...prompt, index: String(index + 1).padStart(2, '0'), categoryLabel: categories.find(item => item.key === prompt.category)?.label })))
 
 const showToast = message => {
   toast.value = message
+  // 连续操作时重置计时，确保最新一条提示可以完整显示。
   window.clearTimeout(toastTimer)
   toastTimer = window.setTimeout(() => { toast.value = '' }, 2200)
 }
@@ -81,26 +85,28 @@ const copyPrompt = async content => {
   }
 }
 
+// 离开页面时清理计时器，避免卸载后继续修改响应式状态。
 onBeforeUnmount(() => window.clearTimeout(toastTimer))
 </script>
 
 <style lang="scss" scoped>
-.si-prompts { min-height: 100vh; padding: clamp(54px,6vw,110px) 5vw 80px; background: #f5f6f1; }
-.si-prompts__hero { width: min(1180px,100%); margin: 0 auto 55px; text-align: center; }
-.si-prompts__hero > span { color: #79ad31; font-size: 12px; font-weight: 800; letter-spacing: .24em; }
-.si-prompts__hero h1 { margin: 12px 0 14px; font-size: clamp(54px,7vw,108px); line-height: .95; letter-spacing: -.07em; }
-.si-prompts__hero p { color: #777; font-size: 14px; }
-.si-prompts__content { width: min(1180px,100%); margin: auto; }
-.si-prompts__filters { margin-bottom: 26px; display: flex; justify-content: center; gap: 10px; }
-.si-prompts__filters button { min-width: 88px; padding: 10px 18px; border: 1px solid #d9d9d4; border-radius: 999px; color: #777; background: #fff; cursor: pointer; transition: all .2s; }
-.si-prompts__filters button:hover,.si-prompts__filters button.is-active { border-color: #070707; color: #fff; background: #070707; }
-.si-prompts__grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
-.si-prompt-card { min-height: 340px; padding: 26px; display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,.07); border-radius: 22px; background: #fff; box-shadow: 0 12px 34px rgba(0,0,0,.04); }
-.si-prompt-card > div { display: flex; align-items: center; justify-content: space-between; color: #83b541; font-size: 11px; letter-spacing: .14em; }.si-prompt-card > div b{color:#bbb;font-size:13px}
-.si-prompt-card h2 { margin: 30px 0 16px; font-size: 22px; }
-.si-prompt-card p { flex: 1; color: #666; font-size: 14px; line-height: 1.9; }
-.si-prompt-card button { margin-top: 25px; padding: 0; display: flex; align-items: center; justify-content: space-between; border: 0; color: #111; background: none; font-weight: 700; cursor: pointer; }.si-prompt-card button i{font-size:20px;font-style:normal}
-.si-prompts__toast { position: fixed; z-index: 200; left: 50%; bottom: 32px; padding: 11px 18px; transform: translateX(-50%); border-radius: 999px; color: #fff; background: rgba(7,7,7,.92); box-shadow: 0 10px 30px rgba(0,0,0,.18); font-size: 13px; white-space: nowrap; }
-@media(max-width:900px){.si-prompts__grid{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.si-prompts{padding:48px 16px 60px}.si-prompts__hero{margin-bottom:36px}.si-prompts__hero h1{font-size:56px}.si-prompts__hero p{padding:0 18px;line-height:1.7}.si-prompts__filters{justify-content:flex-start;overflow-x:auto}.si-prompts__filters button{flex:0 0 auto}.si-prompts__grid{grid-template-columns:1fr}.si-prompt-card{min-height:300px}}
+@use '@/business/styles/base/mixins' as *;
+.ji-prompts { min-height: 100vh; padding: clamp(54px,6vw,110px) 0 80px; background: #f5f6f1; }
+.ji-prompts__hero { @include container; margin-bottom: 55px; text-align: center; }
+.ji-prompts__hero > span { color: #79ad31; font-size: 12px; font-weight: 800; letter-spacing: .24em; }
+.ji-prompts__hero h1 { margin: 12px 0 14px; font-size: clamp(54px,7vw,108px); line-height: .95; letter-spacing: -.07em; }
+.ji-prompts__hero p { color: #777; font-size: 14px; }
+.ji-prompts__content { @include container; }
+.ji-prompts__filters { margin-bottom: 26px; display: flex; justify-content: center; gap: 10px; }
+.ji-prompts__filters button { min-width: 88px; padding: 10px 18px; border: 1px solid #d9d9d4; border-radius: 999px; color: #777; background: #fff; cursor: pointer; transition: all .2s; }
+.ji-prompts__filters button:hover,.ji-prompts__filters button.is-active { border-color: #070707; color: #fff; background: #070707; }
+.ji-prompts__grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+.ji-prompt-card { min-height: 340px; padding: 26px; display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,.07); border-radius: 22px; background: #fff; box-shadow: 0 12px 34px rgba(0,0,0,.04); }
+.ji-prompt-card > div { display: flex; align-items: center; justify-content: space-between; color: #83b541; font-size: 11px; letter-spacing: .14em; }.ji-prompt-card > div b{color:#bbb;font-size:13px}
+.ji-prompt-card h2 { margin: 30px 0 16px; font-size: 22px; }
+.ji-prompt-card p { flex: 1; color: #666; font-size: 14px; line-height: 1.9; }
+.ji-prompt-card button { margin-top: 25px; padding: 0; display: flex; align-items: center; justify-content: space-between; border: 0; color: #111; background: none; font-weight: 700; cursor: pointer; }.ji-prompt-card button i{font-size:20px;font-style:normal}
+.ji-prompts__toast { position: fixed; z-index: 200; left: 50%; bottom: 32px; padding: 11px 18px; transform: translateX(-50%); border-radius: 999px; color: #fff; background: rgba(7,7,7,.92); box-shadow: 0 10px 30px rgba(0,0,0,.18); font-size: 13px; white-space: nowrap; }
+@media(max-width:900px){.ji-prompts__grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.ji-prompts{padding:48px 0 60px}.ji-prompts__hero{margin-bottom:36px}.ji-prompts__hero h1{font-size:56px}.ji-prompts__hero p{padding:0 18px;line-height:1.7}.ji-prompts__filters{justify-content:flex-start;overflow-x:auto}.ji-prompts__filters button{flex:0 0 auto}.ji-prompts__grid{grid-template-columns:1fr}.ji-prompt-card{min-height:300px}}
 </style>

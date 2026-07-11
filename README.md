@@ -1,8 +1,8 @@
-# 刺猬星球 Super-i
+# Jia1.ai
 
 ## 项目介绍
 
-刺猬星球 Super-i 是一个基于 Vue 3 构建的轻量品牌网站。目前项目只保留品牌首页和 AI 提示词页面，不包含后台管理、登录注册、后端 API、Mock 数据、支付、工单或旧站兼容代码。
+Jia1.ai 是一个基于 Vue 3 构建的 AI 创意学习与灵感平台。目前项目只保留品牌首页和 AI 提示词页面，不包含后台管理、登录注册、后端 API、Mock 数据、支付、工单或旧站兼容代码。
 
 项目采用组件化结构组织首页内容，所有图片、视频和图标均由源码目录本地管理，不依赖旧 HTML、jQuery、Swiper、GSAP 或线上静态资源。
 
@@ -35,7 +35,7 @@
 | 地址 | 路由名称 | 内容 |
 | --- | --- | --- |
 | `/` | `Home` | 品牌首页 |
-| `/ai-prompts` | `AiPrompts` | 静态 AI 提示词列表 |
+| `/aiPrompts` | `AiPrompts` | 静态 AI 提示词列表 |
 
 其他地址会统一重定向到首页。
 
@@ -48,6 +48,7 @@
 ├── src/                         # 应用源码
 │   ├── business/                # 前台业务模块
 │   │   ├── assets/              # 本地图片、视频和 SVG 资源
+│   │   │   ├── aiPrompts/       # AI 提示词封面与工具图标
 │   │   │   ├── home/            # 首页专用资源
 │   │   │   │   ├── icons/       # 岗位卡片图标与装饰 SVG
 │   │   │   │   └── media/       # Hero 视频
@@ -59,9 +60,9 @@
 │   │   ├── styles/              # 全局基础样式与 SCSS mixin
 │   │   └── views/               # 页面级视图
 │   │       ├── home/             # 首页及首页专用组件
-│   │       └── ai-prompts/       # AI 提示词页面
+│   │       └── aiPrompts/        # AI 提示词页面
 │   ├── router/                  # Vue Router 配置
-│   ├── App.vue                  # 根组件
+│   ├── appRoot.vue              # 根组件
 │   └── main.js                  # Vue 应用入口
 ├── tests/                       # 自动化测试
 │   ├── unit/                    # Vitest 单元测试
@@ -75,36 +76,37 @@
 ├── package.json                 # 项目脚本、依赖和 Node 版本要求
 ├── package-lock.json            # npm 依赖锁文件
 ├── CNAME                        # 静态站点自定义域名配置
-└── 约束.md                      # 项目级编码约束
+└── AGENTS.md                    # 仓库级开发与维护规范
 ```
 
 ## 各目录说明
 
 ### `src/`
 
-项目的全部可维护源码。入口文件 `main.js` 创建 Vue 应用、注册 Router，并挂载根组件；`App.vue` 只负责渲染当前路由页面。
+项目的全部可维护源码。入口文件 `main.js` 创建 Vue 应用、注册 Router，并挂载根组件；`appRoot.vue` 只负责渲染当前路由页面。
 
 ### `src/business/`
 
 前台功能的主体目录，只包含当前网站实际使用的首页、AI 提示词、公共布局、样式和资源。
 
 - `assets/`：源码直接引用的本地资源。
+  - `aiPrompts/`：AI 提示词封面、信息图标和工具图标；相关图片统一存放于此。
   - `home/`：Hero 视频和封面、品牌展示图、职业定位图、社群二维码及岗位图标。
   - `shared/`：导航 Logo 和网站 favicon。
 - `composables/`：弹层打开、关闭、ESC 响应、滚动锁定和焦点恢复逻辑。
 - `config/`：统一维护首页数字、岗位配置及资源导入映射。
 - `layout/`：所有页面共享的外壳。
-  - `components/SiteHeader.vue`：Logo 和 AI 提示词导航。
-  - `components/SiteFooter.vue`：版权信息和回到顶部。
+  - `components/navigationBar.vue`：Logo 和 AI 提示词导航。
+  - `components/pageFooter.vue`：版权信息和回到顶部。
 - `styles/base/`：页面重置、公共排版和内容容器 mixin。
 - `views/home/`：品牌首页。
-  - `components/HomeHero.vue`：视频首屏和社群卡片。
-  - `components/BrandShowcase.vue`：品牌宣传片入口。
-  - `components/AudienceSection.vue`：适用岗位卡片。
-  - `components/CareerSection.vue`：职业定位内容。
-  - `components/CommunitySection.vue`：社群宣传模块。
-  - `components/VideoDialog.vue`：原生 Vue 视频弹层。
-- `views/ai-prompts/`：AI 提示词分类、卡片、复制功能和轻量提示消息。
+  - `components/heroSection.vue`：视频首屏和社群卡片。
+  - `components/promptShowcase.vue`：首页 AI 提示词展示。
+  - `components/brandSection.vue`：品牌宣传片入口。
+  - `components/identityOverview.vue`：我是谁与能力路径两个连续栏目。
+  - `components/communityBanner.vue`：社群宣传模块。
+  - `components/mediaDialog.vue`：原生 Vue 视频弹层。
+- `views/aiPrompts/`：AI 提示词分类、卡片、复制功能和轻量提示消息。
 
 ### `src/router/`
 
@@ -174,7 +176,7 @@ npm run dev
 1. 使用 Node.js 22 和 `npm ci` 安装锁定依赖。
 2. 执行 ESLint 和 Vitest；检查失败时停止部署。
 3. 使用 Vite 构建到 `dist/`。
-4. 将 `index.html` 复制为 `404.html`，支持直接访问和刷新 `/ai-prompts`。
+4. 将 `index.html` 复制为 `404.html`，支持直接访问和刷新 `/aiPrompts`。
 5. 生成 `.nojekyll`，上传 Pages artifact。
 6. 通过 GitHub 官方 Pages Action 发布到 `github-pages` environment。
 
@@ -195,8 +197,8 @@ npm run dev
 工作流成功后检查：
 
 - `https://jia1.ai/`
-- `https://jia1.ai/ai-prompts`
-- 在 `/ai-prompts` 页面直接刷新
+- `https://jia1.ai/aiPrompts`
+- 在 `/aiPrompts` 页面直接刷新
 - 访问旧地址后是否回到首页
 
 如果域名已经可以访问当前 GitHub Pages，通常无需调整 DNS。若 GitHub Pages 显示 DNS 检查失败，再检查根域名的 A、ALIAS 或 ANAME 记录。
@@ -212,7 +214,7 @@ npm run dev
 ## 开发约定
 
 - 使用单引号、无分号和 2 空格缩进。
-- 站内导航必须使用 Vue Router 命名路由。
-- 页面样式使用 scoped SCSS 和 `si-` 命名空间。
+- 页面 URL 路径段使用小驼峰（lowerCamelCase），站内导航必须使用 Vue Router 命名路由。
+- 页面样式使用 scoped SCSS 和 `ji-` 命名空间。
 - 页面资源必须放入 `src/business/assets` 并通过模块导入。
 - 禁止重新引入 legacy HTML、旧 CSS/JS、账户系统、API 或 Mock 层。
