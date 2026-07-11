@@ -3,6 +3,8 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
+  // 自定义域名从站点根目录提供资源，保持绝对路径稳定。
+  base: '/',
   plugins: [vue()],
   resolve: {
     alias: { '@': resolve(__dirname, 'src') }

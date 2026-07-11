@@ -43,6 +43,8 @@
 
 ```text
 .
+├── .github/
+│   └── workflows/              # GitHub Actions 自动部署配置
 ├── src/                         # 应用源码
 │   ├── business/                # 前台业务模块
 │   │   ├── assets/              # 本地图片、视频和 SVG 资源
@@ -133,6 +135,10 @@ Playwright 默认覆盖以下视口：
 
 本地 IDE 配置目录，不属于业务代码。
 
+### `.github/workflows/`
+
+包含 GitHub Pages 自动部署工作流。每次向 `main` 分支 push 后，GitHub 会自动安装依赖、检查代码、运行单元测试、构建并发布 `dist/`。
+
 ## 环境要求
 
 - Node.js `>= 22.0.0`
@@ -158,6 +164,50 @@ npm run dev
 | `npm run lint:fix` | 自动修复可修复的 ESLint 问题 |
 | `npm run test:unit` | 运行 Vitest 单元测试 |
 | `npm run test:e2e` | 运行 Playwright 响应式端到端测试 |
+
+## GitHub Pages 自动部署
+
+仓库使用 `.github/workflows/deploy-pages.yml` 发布 GitHub Pages。工作流仅监听 `main` 分支，也可以在 GitHub Actions 页面手动触发。
+
+部署步骤如下：
+
+1. 使用 Node.js 22 和 `npm ci` 安装锁定依赖。
+2. 执行 ESLint 和 Vitest；检查失败时停止部署。
+3. 使用 Vite 构建到 `dist/`。
+4. 将 `index.html` 复制为 `404.html`，支持直接访问和刷新 `/ai-prompts`。
+5. 生成 `.nojekyll`，上传 Pages artifact。
+6. 通过 GitHub 官方 Pages Action 发布到 `github-pages` environment。
+
+### 首次启用
+
+代码 push 到 GitHub 后，需要在仓库后台完成一次设置：
+
+1. 打开 `Settings → Pages`。
+2. 将 `Build and deployment → Source` 设置为 `GitHub Actions`。
+3. 确认 `Custom domain` 为 `jia1.ai`。
+4. DNS 检查通过后启用 `Enforce HTTPS`。
+5. 打开 `Actions` 页面，确认 `Deploy GitHub Pages` 工作流执行成功。
+
+使用自定义 Actions 工作流时，域名以 GitHub Pages 设置中的 `Custom domain` 为准。根目录 `CNAME` 仅用于记录当前域名，不会被 Actions 构建流程使用。
+
+### 部署验证
+
+工作流成功后检查：
+
+- `https://jia1.ai/`
+- `https://jia1.ai/ai-prompts`
+- 在 `/ai-prompts` 页面直接刷新
+- 访问旧地址后是否回到首页
+
+如果域名已经可以访问当前 GitHub Pages，通常无需调整 DNS。若 GitHub Pages 显示 DNS 检查失败，再检查根域名的 A、ALIAS 或 ANAME 记录。
+
+### 常见问题
+
+- 工作流不出现：确认 workflow 文件已提交到默认分支 `main`，并且仓库允许 GitHub Actions。
+- 构建失败：进入 Actions 的失败任务查看 lint、单元测试或 Vite 构建日志。
+- 部署成功但域名未更新：确认 Pages Source 为 `GitHub Actions`，并检查浏览器和 CDN 缓存。
+- 子路由刷新 404：确认部署产物中存在 `404.html`。
+- HTTPS 不可选：等待 GitHub 完成域名和证书检查，DNS 传播最长可能需要 24 小时。
 
 ## 开发约定
 
