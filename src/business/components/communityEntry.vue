@@ -32,15 +32,15 @@ const features = [
 </script>
 
 <style lang="scss" scoped>
-.ji-community-entry { width: 27vw; flex-shrink: 0; padding: 1vw 1.4vw; display: flex; align-items: stretch; gap: 2vw; border: 1px solid rgba(201,255,133,.5); border-radius: 1.5625vw; background: linear-gradient(182deg,rgba(201,255,133,.1) 1.45%,rgba(255,255,255,0) 98.76%); }
+.ji-community-entry { width: 27vw; flex-shrink: 0; padding: 1vw 1.4vw; display: flex; align-items: stretch; gap: 2vw; border: 1px solid rgb(var(--ji-theme-accent-rgb) / .5); border-radius: 1.5625vw; background: linear-gradient(182deg,rgb(var(--ji-theme-accent-rgb) / .1) 1.45%,rgba(255,255,255,0) 98.76%); }
 .ji-community-entry__left { min-width: 0; flex: 1; display: flex; flex-direction: column; }
 .ji-community-entry__title { color: #1a1a1a; font-size: 1.0417vw; font-weight: 700; line-height: 1.3; }
-.ji-community-entry__title strong { color: #3d882a; font-family: Poppins,'PingFang SC','Microsoft YaHei',sans-serif; font-size: 1.25vw; line-height: 1.6667vw; }
+.ji-community-entry__title strong { color: var(--ji-theme-deep); font-family: Poppins,'PingFang SC','Microsoft YaHei',sans-serif; font-size: 1.25vw; line-height: 1.6667vw; }
 .ji-community-entry__subtitle { margin-top: .3vw; color: #45513b; font-size: .73vw; }
 .ji-community-entry__features { margin-top: auto; display: flex; justify-content: space-between; gap: 1vw; }
 .ji-community-entry__features > div { display: inline-flex; flex-direction: column; align-items: center; gap: .2vw; flex-shrink: 0; }
 .ji-community-entry__features span { width: 1.8vw; height: 1.8vw; display: inline-flex; }
-.ji-community-entry__features :deep(svg) { width: 100%; height: 100%; fill: #f4ffe7; stroke: #3d882a; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; }
+.ji-community-entry__features :deep(svg) { width: 100%; height: 100%; fill: var(--ji-theme-soft); stroke: var(--ji-theme-deep); stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; }
 .ji-community-entry__features small { color: #000; font-size: .7vw; line-height: 1; white-space: nowrap; }
 .ji-community-entry__right { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; }
 .ji-community-entry__qr { width: 7.8vw; height: 7.8vw; padding: .2vw; overflow: hidden; border-radius: .42vw; background: #fff; box-shadow: 0 .1vw .42vw rgba(0,0,0,.08); }

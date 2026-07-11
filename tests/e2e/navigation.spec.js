@@ -10,7 +10,28 @@ test('导航展示 Logo、AI提示词、AI资讯与 coding 项目', async ({ pag
   await expect(header.getByRole('link', { name: '最新AI资讯' })).toHaveAttribute('href', 'https://maomu.com/news')
   await expect(header.getByRole('link', { name: '我的coding项目' })).toHaveAttribute('href', 'https://github.com/')
   await expect(header.getByRole('link')).toHaveCount(4)
-  await expect(header.getByRole('button')).toHaveCount(page.viewportSize().width <= 768 ? 1 : 0)
+  await expect(header.getByRole('button')).toHaveCount(page.viewportSize().width <= 768 ? 2 : 1)
+})
+
+test('用户主题支持保存、恢复和清空', async ({ page }) => {
+  await page.goto('/')
+  const header = page.locator('.ji-header')
+  const menuToggle = header.getByRole('button', { name: '切换导航菜单' })
+  if (await menuToggle.isVisible()) await menuToggle.click()
+
+  await header.getByRole('button', { name: '我的', exact: true }).click()
+  await header.getByRole('button', { name: /科技蓝/ }).click()
+  await expect.poll(() => page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--ji-theme-primary').trim())).toBe('#3978f6')
+  await expect.poll(() => page.locator('.ji-brand img').evaluate(element => getComputedStyle(element).filter)).toContain('hue-rotate(115deg)')
+  expect(await page.evaluate(() => localStorage.getItem('jia1:theme'))).toBe('technologyBlue')
+
+  await page.reload()
+  await expect.poll(() => page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--ji-theme-primary').trim())).toBe('#3978f6')
+  if (await menuToggle.isVisible()) await menuToggle.click()
+  await header.getByRole('button', { name: '我的', exact: true }).click()
+  await header.getByRole('button', { name: '清空自定义，使用网站默认' }).click()
+  expect(await page.evaluate(() => localStorage.getItem('jia1:theme'))).toBeNull()
+  await expect.poll(() => page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--ji-theme-primary').trim())).toBe('#92d050')
 })
 
 test('首页只保留宣传模块且没有业务死链', async ({ page }) => {

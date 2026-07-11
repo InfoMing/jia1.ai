@@ -43,7 +43,7 @@
               <h4>核心能力：</h4>
               <ul>
                 <li v-for="point in careerPoints" :key="point">
-                  <img v-media-placeholder :src="careerCheck" alt="" />
+                  <span class="ji-capability-card__check" aria-hidden="true"></span>
                   <p>{{ point }}</p>
                 </li>
               </ul>
@@ -58,7 +58,6 @@
 <script setup>
 import { homeAssets as assets, homeContent as content } from '@/business/config/homeContent'
 import audienceCheck from '@/business/assets/home/icons/audienceCheck.svg'
-import careerCheck from '@/business/assets/home/icons/careerCheck.svg'
 import { vMediaPlaceholder } from '@/business/directives/mediaPlaceholder'
 
 // 岗位文案与配置中的本地资源使用相同 key 合并，保持展示数据集中可维护。
@@ -84,10 +83,10 @@ const careerPoints = ['用策略性思维，构建底层视觉路径', '通过AI
 .ji-identity-heading p { min-width: 0; margin: 0; font-size: .833vw; }
 .ji-role-section__grid { margin-top: 1.562vw; display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25vw; }
 .ji-role-card { position: relative; padding: 1.666vw 1.302vw 2.083vw 1.666vw; overflow: hidden; border: 1px solid #000; border-radius: 20px; box-shadow: 0 0 .26vw rgba(0,0,0,.1); }
-.ji-role-card::before { content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: .312vw; background: #c9ff85; }
+.ji-role-card::before { content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: .312vw; background: var(--ji-theme-accent); }
 .ji-role-card header { display: flex; align-items: center; }
-.ji-role-card header > span { width: 2.187vw; height: 2.187vw; margin-right: .833vw; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: linear-gradient(180deg,rgba(221,248,63,.7),rgba(214,252,220,.7)); }
-.ji-role-card header img { width: 1.354vw; }
+.ji-role-card header > span { width: 2.187vw; height: 2.187vw; margin-right: .833vw; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: linear-gradient(180deg,rgb(var(--ji-theme-accent-rgb) / .7),var(--ji-theme-soft)); }
+.ji-role-card header img { width: 1.354vw; filter: var(--ji-theme-image-filter); }
 .ji-role-card h3 { margin: 0; font-size: 1.354vw; font-weight: 500; }
 .ji-role-card__tags { margin-top: 1.041vw; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .26vw; font-size: .938vw; }
 .ji-role-card__tags span { padding: .468vw 1.041vw; display: block; border: 1px solid #000; border-radius: 60px; background: rgba(255,255,255,.31); text-align: center; }
@@ -95,17 +94,18 @@ const careerPoints = ['用策略性思维，构建底层视觉路径', '通过AI
 .ji-role-card li { margin-top: .833vw; display: flex; align-items: center; color: #070707; }
 .ji-role-card li img { width: .729vw; margin-right: .364vw; }
 .ji-role-card li p { flex: 1; margin: 0; }
-.ji-role-card__direction { position: absolute; right: 1.25vw; bottom: 1.562vw; width: 4.895vw; }
+.ji-role-card__direction { position: absolute; right: 1.25vw; bottom: 1.562vw; width: 4.895vw; filter: var(--ji-theme-image-filter); }
 .ji-capability-section { padding: 0 0 2.083vw; }
-.ji-capability-card { margin-top: 1.25vw; padding: 1.25vw 1.5vw 1.5vw; border: 2px solid #c9ff85; border-radius: 20px; background: linear-gradient(238deg,#faf9fb -13.13%,#daffaa 69.63%); }
+.ji-capability-card { margin-top: 1.25vw; padding: 1.25vw 1.5vw 1.5vw; border: 1px solid var(--ji-theme-accent); border-radius: 20px; background: linear-gradient(238deg,#fff -13.13%,var(--ji-theme-soft) 69.63%); }
 .ji-capability-card > h3 { margin: 0 0 1.25vw; font-size: 1.042vw; font-weight: 400; }
 .ji-capability-card__body { display: flex; flex-wrap: wrap; align-items: center; }
-.ji-capability-card__visual { width: 30vw; margin: 0 3vw 0 4vw; }
+.ji-capability-card__visual { width: 30vw; margin: 0 3vw 0 4vw; filter: var(--ji-theme-image-filter); }
 .ji-capability-card__content { flex: 1; padding-bottom: 0; }
 .ji-capability-card h4 { margin: 0; font-size: 2vw; font-weight: 700; }
 .ji-capability-card ul { margin: 0; padding: 0; list-style: none; font-size: clamp(15px,1vw,19px); line-height: 1.45; }
 .ji-capability-card li { margin-top: .9vw; display: flex; align-items: center; color: #070707; }
-.ji-capability-card li img { width: 1vw; margin-right: .52vw; }
+.ji-capability-card__check { position: relative; width: 1vw; aspect-ratio: 1; margin-right: .52vw; flex: 0 0 auto; border: max(1px,.09vw) solid var(--ji-theme-primary); border-radius: 50%; }
+.ji-capability-card__check::after { content: ''; position: absolute; top: 23%; left: 25%; width: 43%; height: 25%; border-bottom: max(1px,.09vw) solid var(--ji-theme-primary); border-left: max(1px,.09vw) solid var(--ji-theme-primary); transform: rotate(-45deg); }
 .ji-capability-card li p { flex: 1; margin: 0; }
 @media (max-width: 768px) {
   .ji-identity-overview { min-height: 0; }
@@ -134,6 +134,7 @@ const careerPoints = ['用策略性思维，构建底层视觉路径', '通过AI
   .ji-capability-card h4 { font-size: 22px; }
   .ji-capability-card ul { margin-bottom: 0; font-size: 15px; }
   .ji-capability-card li { margin-top: 12px; }
-  .ji-capability-card li img { width: 16px; margin-right: 8px; }
+  .ji-capability-card__check { width: 16px; margin-right: 8px; border-width: 1.5px; }
+  .ji-capability-card__check::after { border-width: 0 0 1.5px 1.5px; }
 }
 </style>

@@ -86,12 +86,12 @@ const visiblePrompts = computed(() => prompts.filter(prompt => {
 .ji-prompts__toolbar { @include container; position: relative; min-height: 40px; margin-top: clamp(30px, 3.125vw, 60px); display: flex; align-items: center; justify-content: center; }
 .ji-prompts__mode { position: absolute; left: 0; padding: 6px; display: flex; align-items: center; gap: 9px; border-radius: 28px; background: #fff; box-shadow: 0 0 10px rgba(0,0,0,.1); font-size: 14px; }
 .ji-prompts__mode button { padding: 3px 8px; border: 0; border-radius: 20px; color: #263119; background: transparent; font: inherit; cursor: pointer; transition: background-color .2s ease,transform .2s ease; }
-.ji-prompts__mode button.is-active { color: #070707; background: #c9ff85; }
+.ji-prompts__mode button.is-active { color: #070707; background: var(--ji-theme-accent); }
 .ji-prompts__mode button:active { transform: scale(.96); }
-.ji-prompts__mode i { width: 1px; height: 15px; background: #dfffb7; }
+.ji-prompts__mode i { width: 1px; height: 15px; background: var(--ji-theme-accent); opacity: .55; }
 .ji-prompts__filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
-.ji-prompts__filters button { height: 40px; padding: 0 23px; border: 1px solid #dfffb7; border-radius: 100px; color: #070707; background: #f7ffec; font-size: 14px; cursor: pointer; transition: background-color .3s ease,transform .3s ease; }
-.ji-prompts__filters button:hover,.ji-prompts__filters button.is-active { background: #c9ff85; }
+.ji-prompts__filters button { height: 40px; padding: 0 23px; border: 1px solid rgb(var(--ji-theme-accent-rgb) / .7); border-radius: 100px; color: #070707; background: var(--ji-theme-soft); font-size: 14px; cursor: pointer; transition: background-color .3s ease,transform .3s ease; }
+.ji-prompts__filters button:hover,.ji-prompts__filters button.is-active { background: var(--ji-theme-accent); }
 .ji-prompts__filters button:active { transform: scale(.96); }
 .ji-prompts__search { position: absolute; right: 0; padding: 12px 18px; display: flex; align-items: center; border-radius: 28px; background: #fff; box-shadow: 0 3px 16px 2px rgba(0,0,0,.05); }
 .ji-prompts__search input { width: 180px; border: 0; outline: 0; color: #070707; background: transparent; font-size: 14px; }
@@ -99,9 +99,9 @@ const visiblePrompts = computed(() => prompts.filter(prompt => {
 .ji-prompts__content { @include container; }
 .ji-prompts__heading { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
 .ji-prompts__heading h1 { margin: 0; font-size: clamp(28px, 2.08vw, 40px); line-height: 1.2; }
-.ji-prompts__heading p { margin: 8px 0 0; color: #374228; font-size: 14px; }
+.ji-prompts__heading p { margin: 8px 0 0; color: var(--ji-theme-deep); font-size: 14px; }
 .ji-prompts__grid { margin-top: clamp(30px, 2.383vw, 46px); display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: clamp(20px, 2.083vw, 40px); align-items: stretch; }
-.ji-prompts__empty { padding: 100px 0; color: #52613e; text-align: center; }
+.ji-prompts__empty { padding: 100px 0; color: var(--ji-theme-deep); text-align: center; }
 
 @media (max-width: 1099px) {
   .ji-prompts__toolbar { padding-top: 62px; }

@@ -83,7 +83,7 @@ function resetMagnetic(event) {
 .ji-brand-section p { margin: .833vw 0 3.125vw; font-size: 1.875vw; line-height: 1.35; }
 .ji-brand-section__actions { display: flex; align-items: center; justify-content: center; }
 .ji-brand-section button { --button-x: 0px; --button-y: 0px; --content-x: 0px; --content-y: 0px; min-width: 12.291vw; margin: 0 .416vw; padding: .833vw 2.604vw; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #000; border-radius: 120px; color: #000; background: rgba(255,255,255,.3); font-size: 1.042vw; cursor: pointer; transform: translate3d(var(--button-x),var(--button-y),0); transition: transform .28s cubic-bezier(.22,.8,.24,1); will-change: transform; }
-.ji-brand-section button.is-primary { border-color: #c9ff85; background: #c9ff85; }
+.ji-brand-section button.is-primary { border-color: var(--ji-theme-accent); background: var(--ji-theme-accent); }
 .ji-brand-section__button-content { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 6px; transform: translate3d(var(--content-x),var(--content-y),0); transition: transform .22s cubic-bezier(.22,.8,.24,1); will-change: transform; }
 .ji-brand-section button svg { width: 1.146vw; height: 1.146vw; flex: 0 0 auto; fill: currentColor; }
 .ji-brand-section button:active { transform: translate3d(var(--button-x),var(--button-y),0) scale(.98); }

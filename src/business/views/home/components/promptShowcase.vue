@@ -35,8 +35,8 @@ const prompts = promptItems.slice(0, 4)
 .ji-home-prompts__wrap { @include container; }
 .ji-home-prompts__head { margin-bottom: 1.25vw; display: flex; align-items: center; justify-content: space-between; }
 .ji-home-prompts__head h2 { margin: 0; display: flex; align-items: center; color: #070707; font-size: 1.667vw; font-weight: 700; }
-.ji-home-prompts__head h2 i { width: 4px; height: 1.25vw; margin-right: 12px; border-radius: 2px; background: #c9ff85; }
-.ji-home-prompts__head a { color: #52613e; font-size: .833vw; text-decoration: none; transition: color .2s; }
+.ji-home-prompts__head h2 i { width: 4px; height: 1.25vw; margin-right: 12px; border-radius: 2px; background: var(--ji-theme-accent); }
+.ji-home-prompts__head a { color: var(--ji-theme-deep); font-size: .833vw; text-decoration: none; transition: color .2s; }
 .ji-home-prompts__head a:hover { color: #070707; }
 .ji-home-prompts__list { width: 100%; display: grid; grid-template-columns: repeat(4,1fr); align-items: stretch; gap: 2.083vw; }
 @media (max-width: 768px) {

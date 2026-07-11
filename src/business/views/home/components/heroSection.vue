@@ -19,7 +19,7 @@
     </div>
 
     <div class="ji-hero__intro">
-      <h1>佳一AI <em>Jia1.ai</em></h1>
+      <h1><span>佳一<mark>AI</mark></span> <em>Jia1.ai</em></h1>
       <p>一个聚集AI创意者的学习与灵感平台</p>
       <div class="ji-community-card">
         <img v-media-placeholder :src="assets.communityQr" alt="Jia1.ai 社群" />
@@ -54,16 +54,18 @@ const videoReady = ref(false)
 .ji-hero__media video { position: relative; width: 100%; display: block; opacity: 0; mix-blend-mode: multiply; transition: opacity .7s ease; }
 .ji-hero__media video.is-ready { opacity: 1; }
 .ji-hero__glow { position: absolute; z-index: 3; bottom: -90px; width: 58%; height: 350px; filter: blur(48px); border-radius: 50%; pointer-events: none; }
-.ji-hero__glow--left { left: -7%; background: radial-gradient(ellipse,rgba(170,255,0,.45),rgba(0,229,204,.1) 65%,transparent); }
-.ji-hero__glow--right { right: -8%; background: radial-gradient(ellipse,rgba(170,255,0,.35),transparent 70%); }
+.ji-hero__glow--left { left: -7%; background: radial-gradient(ellipse,rgb(var(--ji-theme-accent-rgb) / .45),rgb(var(--ji-theme-rgb) / .1) 65%,transparent); }
+.ji-hero__glow--right { right: -8%; background: radial-gradient(ellipse,rgb(var(--ji-theme-accent-rgb) / .35),transparent 70%); }
 .ji-hero__intro { position: relative; z-index: 10; width: 100%; text-align: center; transform: translateY(-10vh); }
 .ji-hero__intro h1 { font-size: clamp(62px,6.77vw,105px); line-height: 1; letter-spacing: -4px; }
-.ji-hero__intro h1 em { margin-left: .14em; color: #000; font-family: Poppins,Inter,sans-serif; font-size: .5em; font-style: normal; font-weight: 560; letter-spacing: -.04em; }
+.ji-hero__intro h1 > span { display: inline-flex; align-items: center; color: #050505; font-family: ui-rounded,'SF Pro Rounded','PingFang SC','Microsoft YaHei',sans-serif; font-weight: 780; letter-spacing: -.075em; }
+.ji-hero__intro h1 mark { margin-left: .12em; padding: .1em .16em .12em; border-radius: .22em; color: #070707; background: var(--ji-theme-accent); box-shadow: inset 0 0 0 1px rgb(var(--ji-theme-rgb) / .12),0 .08em .22em rgb(var(--ji-theme-rgb) / .14); font-family: ui-rounded,'SF Pro Rounded','Arial Rounded MT Bold',sans-serif; font-size: .56em; font-weight: 800; line-height: 1; letter-spacing: -.04em; }
+.ji-hero__intro h1 em { margin-left: .14em; color: #000; font-family: ui-rounded,'SF Pro Rounded','Arial Rounded MT Bold',Poppins,sans-serif; font-size: .5em; font-style: normal; font-weight: 700; letter-spacing: -.035em; text-shadow: 0 1px 0 rgba(255,255,255,.95),0 5px 18px rgba(18,32,10,.1); }
 .ji-hero__intro > p { margin-top: 22px; color: #000; font-size: 14px; font-weight: 400; }
 .ji-community-card { width: 246px; margin: 28px auto 0; padding: 12px; display: flex; gap: 12px; text-align: left; border: 1px solid rgba(0,0,0,.06); border-radius: 16px; background: rgba(255,255,255,.82); box-shadow: 0 6px 24px rgba(0,0,0,.06); backdrop-filter: blur(8px); }
 .ji-community-card img { width: 76px; height: 76px; object-fit: cover; }
 .ji-community-card div { display: flex; flex-direction: column; gap: 3px; }
-.ji-community-card strong { font-size: 12px; }.ji-community-card span,.ji-community-card small { font-size: 9px; color: #555; }.ji-community-card b,.ji-community-card i { color: #07c160; font-style: normal; }
+.ji-community-card strong { font-size: 12px; }.ji-community-card span,.ji-community-card small { font-size: 9px; color: #555; }.ji-community-card b,.ji-community-card i { color: var(--ji-theme-deep); font-style: normal; }
 .ji-scroll-hint { position: absolute; z-index: 20; left: 50%; bottom: 28px; transform: translateX(-50%); color: #888; font-size: 12px; }
 .ji-scroll-hint i { display: block; width: 1px; height: 30px; margin: 8px auto -30px; background: linear-gradient(#aaa,transparent); animation: ji-hint 1.4s infinite; }
 @keyframes ji-hint { 50% { transform: translateY(7px); } }

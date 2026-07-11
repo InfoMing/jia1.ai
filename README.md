@@ -217,4 +217,14 @@ npm run dev
 - 页面 URL 路径段使用小驼峰（lowerCamelCase），站内导航必须使用 Vue Router 命名路由。
 - 页面样式使用 scoped SCSS 和 `ji-` 命名空间。
 - 页面资源必须放入 `src/business/assets` 并通过模块导入。
-- 禁止重新引入 legacy HTML、旧 CSS/JS、账户系统、API 或 Mock 层。
+- 禁止重新引入 legacy HTML、旧 CSS/JS、账户系统或运行时 API Mock 层。
+
+## 主题配置
+
+全站主题配置位于 `src/business/config/themeConfig.js`：
+
+- `allowUserCustomization: true`：导航显示“我的”，用户可选择主题并保存到本地缓存。
+- `allowUserCustomization: false`：隐藏“我的”，忽略用户缓存并始终使用网站默认主题。
+- `defaultTheme`：设置网站默认主题，可选 `current`、`technologyBlue`、`green`、`pink`、`red`。
+
+用户选择保存在 `jia1:theme`。点击“清空自定义，使用网站默认”后会删除该缓存，并立即恢复 `defaultTheme`。新增主题相关样式必须使用 `--ji-theme-*` CSS 变量。
