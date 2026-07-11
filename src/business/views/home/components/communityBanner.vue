@@ -11,13 +11,14 @@
     </div>
 
     <div class="ji-community-section__media">
-      <img :src="assets.communityPanel" alt="Jia1.ai 社群内容展示" />
+      <img v-media-placeholder :src="assets.communityPanel" alt="Jia1.ai 社群内容展示" />
     </div>
   </section>
 </template>
 
 <script setup>
 import { homeAssets as assets } from '@/business/config/homeContent'
+import { vMediaPlaceholder } from '@/business/directives/mediaPlaceholder'
 </script>
 
 <style lang="scss" scoped>

@@ -10,7 +10,7 @@
         <div class="ji-role-section__grid">
           <article v-for="item in audiences" :key="item.key" class="ji-role-card">
             <header>
-              <span><img :src="item.icon" alt="" /></span>
+              <span><img v-media-placeholder :src="item.icon" alt="" /></span>
               <h3>{{ item.title }}</h3>
             </header>
             <div class="ji-role-card__tags">
@@ -18,11 +18,11 @@
             </div>
             <ul>
               <li v-for="point in item.points" :key="point">
-                <img :src="audienceCheck" alt="" />
+                <img v-media-placeholder :src="audienceCheck" alt="" />
                 <p>{{ point }}</p>
               </li>
             </ul>
-            <img class="ji-role-card__direction" :src="item.decor" alt="" />
+            <img v-media-placeholder class="ji-role-card__direction" :src="item.decor" alt="" />
           </article>
         </div>
       </div>
@@ -38,12 +38,12 @@
         <div class="ji-capability-card">
           <h3>策略+视觉+营销三位一体的新一代品牌建设者</h3>
           <div class="ji-capability-card__body">
-            <img class="ji-capability-card__visual" :src="assets.careerImage" alt="AI视觉规划师能力路径" />
+            <img v-media-placeholder class="ji-capability-card__visual" :src="assets.careerImage" alt="AI视觉规划师能力路径" />
             <div class="ji-capability-card__content">
               <h4>核心能力：</h4>
               <ul>
                 <li v-for="point in careerPoints" :key="point">
-                  <img :src="careerCheck" alt="" />
+                  <img v-media-placeholder :src="careerCheck" alt="" />
                   <p>{{ point }}</p>
                 </li>
               </ul>
@@ -59,6 +59,7 @@
 import { homeAssets as assets, homeContent as content } from '@/business/config/homeContent'
 import audienceCheck from '@/business/assets/home/icons/audienceCheck.svg'
 import careerCheck from '@/business/assets/home/icons/careerCheck.svg'
+import { vMediaPlaceholder } from '@/business/directives/mediaPlaceholder'
 
 // 岗位文案与配置中的本地资源使用相同 key 合并，保持展示数据集中可维护。
 const audienceCopy = {

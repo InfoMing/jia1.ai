@@ -3,8 +3,9 @@
     <div class="ji-hero__glow ji-hero__glow--left" />
     <div class="ji-hero__glow ji-hero__glow--right" />
     <div class="ji-hero__media">
-      <img class="ji-hero__poster" :class="{ 'is-hidden': videoReady }" :src="assets.heroPoster" alt="" />
+      <img v-media-placeholder class="ji-hero__poster" :class="{ 'is-hidden': videoReady }" :src="assets.heroPoster" alt="" />
       <video
+        v-media-placeholder
         :class="{ 'is-ready': videoReady }"
         :src="assets.heroVideo"
         autoplay
@@ -21,7 +22,7 @@
       <h1>佳一AI <em>Jia1.ai</em></h1>
       <p>一个聚集AI创意者的学习与灵感平台</p>
       <div class="ji-community-card">
-        <img :src="assets.communityQr" alt="Jia1.ai 社群" />
+        <img v-media-placeholder :src="assets.communityQr" alt="Jia1.ai 社群" />
         <div>
           <strong>jia1.ai 社群</strong>
           <span>已有 <b>{{ content.community.total.toLocaleString() }}</b> 人加入社群</span>
@@ -38,6 +39,7 @@
 <script setup>
 import { ref } from 'vue'
 import { homeAssets as assets, homeContent as content } from '@/business/config/homeContent'
+import { vMediaPlaceholder } from '@/business/directives/mediaPlaceholder'
 
 // 视频读取到首帧前始终展示本地封面，加载失败时也不会出现空白背景。
 const videoReady = ref(false)

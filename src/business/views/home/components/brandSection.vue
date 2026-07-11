@@ -3,7 +3,7 @@
     <div class="ji-brand-section__wrap">
       <div class="ji-brand-section__main">
         <div class="ji-brand-section__background">
-          <img :src="assets.showcase" alt="" />
+          <img v-media-placeholder :src="assets.showcase" alt="" />
         </div>
 
         <div class="ji-brand-section__content">
@@ -41,6 +41,7 @@
 
 <script setup>
 import { homeAssets as assets } from '@/business/config/homeContent'
+import { vMediaPlaceholder } from '@/business/directives/mediaPlaceholder'
 
 // 两个入口暂时共用首页媒体视频，由父页面统一打开公共视频弹层。
 const emit = defineEmits(['video'])
@@ -73,8 +74,8 @@ function resetMagnetic(event) {
 .ji-brand-section { padding: 6.25vw 0; }
 .ji-brand-section__wrap { @include container; }
 .ji-brand-section__main { position: relative; overflow: hidden; border-radius: 10px; }
-.ji-brand-section__background { width: 100%; }
-.ji-brand-section__background img { width: 100%; height: auto; display: block; object-fit: cover; }
+.ji-brand-section__background { width: 100%; aspect-ratio: 1720 / 840; }
+.ji-brand-section__background img { width: 100%; height: 100%; display: block; object-fit: cover; }
 .ji-brand-section__content { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; text-align: center; }
 .ji-brand-section__copy { width: 100%; }
 .ji-brand-section__mark { width: 12.083vw; height: 2.395vw; margin: 0 auto 3.125vw; display: inline-flex; align-items: center; justify-content: center; border-radius: 96px; color: #fff; background: rgba(255,255,255,.2); font-family: Poppins,Inter,sans-serif; font-size: 1.5vw; font-weight: 600; letter-spacing: .16em; }

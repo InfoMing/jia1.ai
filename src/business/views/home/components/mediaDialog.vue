@@ -3,7 +3,7 @@
     <div v-if="open" class="ji-media-dialog" role="dialog" aria-modal="true" aria-label="品牌宣传片" @click.self="$emit('close')">
       <div class="ji-media-dialog__panel">
         <button type="button" aria-label="关闭视频" @click="$emit('close')">×</button>
-        <video :src="assets.heroVideo" :poster="assets.heroPoster" controls autoplay playsinline />
+        <video v-media-placeholder :src="assets.heroVideo" :poster="assets.heroPoster" controls autoplay playsinline />
       </div>
     </div>
   </teleportComponent>
@@ -12,6 +12,7 @@
 <script setup>
 import { Teleport as teleportComponent } from 'vue'
 import { homeAssets as assets } from '@/business/config/homeContent'
+import { vMediaPlaceholder } from '@/business/directives/mediaPlaceholder'
 
 // 弹层传送到 body，避免被首页容器的 overflow 和层叠上下文裁切。
 defineProps({ open: Boolean })

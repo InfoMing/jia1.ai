@@ -1,112 +1,129 @@
 <template>
-  <section class="ji-prompts ji-page">
-    <header class="ji-prompts__hero">
-      <span>AI PROMPT LIBRARY</span>
-      <h1>AI提示词</h1>
-      <p>从灵感到成品，选择场景并复制提示词，快速开始你的 AI 创作。</p>
-    </header>
+  <main class="ji-prompts">
+    <section class="ji-prompts__content" aria-labelledby="prompts-title">
+      <header class="ji-prompts__heading">
+        <div>
+          <h1 id="prompts-title">AI提示词</h1>
+          <p>精选 AI 创作提示词与灵感案例，点击卡片即可查看完整内容</p>
+        </div>
+        <communityEntry />
+      </header>
+    </section>
 
-    <div class="ji-prompts__content">
+    <section class="ji-prompts__toolbar" aria-label="AI 提示词筛选">
+      <div class="ji-prompts__mode" aria-label="内容模式">
+        <button :class="{ 'is-active': activeMode === 'learning' }" type="button" @click="switchMode('learning')">学习模式</button>
+        <i></i>
+        <button :class="{ 'is-active': activeMode === 'inspiration' }" type="button" @click="switchMode('inspiration')">灵感模式</button>
+      </div>
+
       <nav class="ji-prompts__filters" aria-label="提示词分类">
         <button
           v-for="category in categories"
-          :key="category.key"
-          :class="{ 'is-active': activeCategory === category.key }"
+          :key="category"
+          :class="{ 'is-active': activeCategory === category }"
           type="button"
-          @click="activeCategory = category.key"
+          @click="activeCategory = category"
         >
-          {{ category.label }}
+          {{ category }}
         </button>
       </nav>
 
-      <div class="ji-prompts__grid">
-        <article v-for="prompt in visiblePrompts" :key="prompt.title" class="ji-prompt-card">
-          <div><span>{{ prompt.categoryLabel }}</span><b>{{ prompt.index }}</b></div>
-          <h2>{{ prompt.title }}</h2>
-          <p>{{ prompt.content }}</p>
-          <button type="button" @click="copyPrompt(prompt.content)">复制提示词 <i>↗</i></button>
-        </article>
+      <label class="ji-prompts__search">
+        <input v-model.trim="keyword" type="search" placeholder="搜索提示词" />
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
+      </label>
+    </section>
+
+    <section class="ji-prompts__content">
+      <div v-if="visiblePrompts.length" class="ji-prompts__grid">
+        <promptCard
+          v-for="prompt in visiblePrompts"
+          :key="prompt.title"
+          :prompt="prompt"
+          :image="resolvePromptImage(prompt.image)"
+        />
       </div>
-    </div>
-    <div v-if="toast" class="ji-prompts__toast" role="status" aria-live="polite">{{ toast }}</div>
-  </section>
+      <p v-else class="ji-prompts__empty">没有找到相关提示词</p>
+    </section>
+  </main>
 </template>
 
 <script setup>
-import { computed, onBeforeUnmount, ref } from 'vue'
+import { computed, ref } from 'vue'
+import promptCard from '@/business/components/promptCard.vue'
+import communityEntry from '@/business/components/communityEntry.vue'
+import { promptItems as prompts, resolvePromptImage } from '@/business/config/promptContent'
 
-// 分类 key 与提示词数据中的 category 对应，用于纯前端筛选。
-const categories = [
-  { key: 'general', label: '通用' },
-  { key: 'image', label: '图像' },
-  { key: 'video', label: '视频' },
-  { key: 'marketing', label: '营销' }
-]
+const modeCategories = {
+  learning: ['通用', '营销'],
+  inspiration: ['图像', '视频']
+}
+const activeMode = ref('learning')
+const activeCategory = ref('全部')
+const keyword = ref('')
+const categories = computed(() => ['全部', ...modeCategories[activeMode.value]])
 
-const prompts = [
-  { category: 'general', title: '结构化任务拆解', content: '你是一位资深项目顾问。请先明确目标、受众与限制条件，再将任务拆成可执行步骤，并标注每一步的预期产出、风险和验收标准。' },
-  { category: 'general', title: '专业内容润色', content: '请在不改变原意的前提下润色以下内容，使表达清晰、自然、有逻辑。删除重复信息，保留关键事实，并分别给出正式版和简洁版。' },
-  { category: 'general', title: '创意方案发散', content: '围绕以下主题提供 10 个差异明显的创意方向。每个方向包含核心概念、适用场景、视觉关键词和一句传播口号，避免同质化表达。' },
-  { category: 'image', title: '电影感人物肖像', content: '电影感人物肖像，柔和侧逆光，真实皮肤质感，浅景深，克制的青橙色调，主体居中，85mm 镜头，高级商业摄影，细节清晰。' },
-  { category: 'image', title: '极简产品海报', content: '极简产品广告海报，产品悬浮于纯净背景中央，精确轮廓光，柔和投影，大面积留白，现代无衬线排版，高端品牌视觉，4K。' },
-  { category: 'image', title: '东方未来场景', content: '东方未来主义城市，传统建筑轮廓与透明科技材质融合，晨雾、体积光、细腻环境细节，广角构图，电影级概念设计。' },
-  { category: 'video', title: '品牌开场镜头', content: '5 秒品牌开场，镜头从微距材质细节缓慢拉远至完整产品，光线沿边缘流动，背景极简，运动平稳，最后定格品牌标识。' },
-  { category: 'video', title: '产品动态展示', content: '产品在暗色空间中缓慢旋转，镜头环绕推进，局部特写展示材质与结构，灯光随运动渐变，节奏高级克制，无跳切，16:9。' },
-  { category: 'video', title: '城市情绪短片', content: '雨后城市清晨，行人从光影中经过，手持跟拍与静态空镜交替，低饱和色彩，自然环境声，真实纪录片质感，情绪温暖。' },
-  { category: 'marketing', title: '产品卖点提炼', content: '请基于产品信息提炼 3 个核心卖点。每个卖点包含用户痛点、产品价值、可信依据和一句不超过 18 字的传播文案，避免夸大承诺。' },
-  { category: 'marketing', title: '社交媒体文案', content: '为以下主题撰写一篇社交媒体短文：用具体场景开头，正文提供 3 个可执行建议，语气真诚自然，结尾设置一个容易回答的互动问题。' },
-  { category: 'marketing', title: '品牌故事框架', content: '请用“用户困境—品牌洞察—解决方式—真实改变—未来愿景”的结构撰写品牌故事，语言简洁有画面感，避免空洞口号。' }
-]
-
-const activeCategory = ref('general')
-const toast = ref('')
-let toastTimer
-
-// 当前分类变化时重新生成序号和中文分类名称，不复制保存派生数据。
-const visiblePrompts = computed(() => prompts
-  .filter(prompt => prompt.category === activeCategory.value)
-  .map((prompt, index) => ({ ...prompt, index: String(index + 1).padStart(2, '0'), categoryLabel: categories.find(item => item.key === prompt.category)?.label })))
-
-const showToast = message => {
-  toast.value = message
-  // 连续操作时重置计时，确保最新一条提示可以完整显示。
-  window.clearTimeout(toastTimer)
-  toastTimer = window.setTimeout(() => { toast.value = '' }, 2200)
+// 模式切换后回到当前模式的全部内容，避免保留另一个模式下不可用的分类。
+const switchMode = mode => {
+  activeMode.value = mode
+  activeCategory.value = '全部'
 }
 
-/** 复制只调用浏览器能力，不保存任何用户状态。 */
-const copyPrompt = async content => {
-  try {
-    if (!window.navigator.clipboard?.writeText) throw new Error('clipboard unavailable')
-    await window.navigator.clipboard.writeText(content)
-    showToast('提示词已复制')
-  } catch {
-    showToast('复制失败，请手动选择提示词文本')
-  }
-}
-
-// 离开页面时清理计时器，避免卸载后继续修改响应式状态。
-onBeforeUnmount(() => window.clearTimeout(toastTimer))
+// 分类与关键词同时生效，Markdown 更新后无需修改页面逻辑。
+const visiblePrompts = computed(() => prompts.filter(prompt => {
+  const matchesMode = modeCategories[activeMode.value].includes(prompt.category)
+  const matchesCategory = activeCategory.value === '全部' || prompt.category === activeCategory.value
+  const searchText = [prompt.title, prompt.imageSubtitle, prompt.category, ...(prompt.tags || [])].join(' ').toLowerCase()
+  return matchesMode && matchesCategory && searchText.includes(keyword.value.toLowerCase())
+}))
 </script>
 
 <style lang="scss" scoped>
 @use '@/business/styles/base/mixins' as *;
-.ji-prompts { min-height: 100vh; padding: clamp(54px,6vw,110px) 0 80px; background: #f5f6f1; }
-.ji-prompts__hero { @include container; margin-bottom: 55px; text-align: center; }
-.ji-prompts__hero > span { color: #79ad31; font-size: 12px; font-weight: 800; letter-spacing: .24em; }
-.ji-prompts__hero h1 { margin: 12px 0 14px; font-size: clamp(54px,7vw,108px); line-height: .95; letter-spacing: -.07em; }
-.ji-prompts__hero p { color: #777; font-size: 14px; }
+
+.ji-prompts { min-height: calc(100svh - 50px); padding: 0; background: #fff; }
+.ji-prompts__toolbar { @include container; position: relative; min-height: 40px; margin-top: clamp(30px, 3.125vw, 60px); display: flex; align-items: center; justify-content: center; }
+.ji-prompts__mode { position: absolute; left: 0; padding: 6px; display: flex; align-items: center; gap: 9px; border-radius: 28px; background: #fff; box-shadow: 0 0 10px rgba(0,0,0,.1); font-size: 14px; }
+.ji-prompts__mode button { padding: 3px 8px; border: 0; border-radius: 20px; color: #263119; background: transparent; font: inherit; cursor: pointer; transition: background-color .2s ease,transform .2s ease; }
+.ji-prompts__mode button.is-active { color: #070707; background: #c9ff85; }
+.ji-prompts__mode button:active { transform: scale(.96); }
+.ji-prompts__mode i { width: 1px; height: 15px; background: #dfffb7; }
+.ji-prompts__filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.ji-prompts__filters button { height: 40px; padding: 0 23px; border: 1px solid #dfffb7; border-radius: 100px; color: #070707; background: #f7ffec; font-size: 14px; cursor: pointer; transition: background-color .3s ease,transform .3s ease; }
+.ji-prompts__filters button:hover,.ji-prompts__filters button.is-active { background: #c9ff85; }
+.ji-prompts__filters button:active { transform: scale(.96); }
+.ji-prompts__search { position: absolute; right: 0; padding: 12px 18px; display: flex; align-items: center; border-radius: 28px; background: #fff; box-shadow: 0 3px 16px 2px rgba(0,0,0,.05); }
+.ji-prompts__search input { width: 180px; border: 0; outline: 0; color: #070707; background: transparent; font-size: 14px; }
+.ji-prompts__search svg { width: 20px; fill: none; stroke: #070707; stroke-linecap: round; stroke-width: 1.7; }
 .ji-prompts__content { @include container; }
-.ji-prompts__filters { margin-bottom: 26px; display: flex; justify-content: center; gap: 10px; }
-.ji-prompts__filters button { min-width: 88px; padding: 10px 18px; border: 1px solid #d9d9d4; border-radius: 999px; color: #777; background: #fff; cursor: pointer; transition: all .2s; }
-.ji-prompts__filters button:hover,.ji-prompts__filters button.is-active { border-color: #070707; color: #fff; background: #070707; }
-.ji-prompts__grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
-.ji-prompt-card { min-height: 340px; padding: 26px; display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,.07); border-radius: 22px; background: #fff; box-shadow: 0 12px 34px rgba(0,0,0,.04); }
-.ji-prompt-card > div { display: flex; align-items: center; justify-content: space-between; color: #83b541; font-size: 11px; letter-spacing: .14em; }.ji-prompt-card > div b{color:#bbb;font-size:13px}
-.ji-prompt-card h2 { margin: 30px 0 16px; font-size: 22px; }
-.ji-prompt-card p { flex: 1; color: #666; font-size: 14px; line-height: 1.9; }
-.ji-prompt-card button { margin-top: 25px; padding: 0; display: flex; align-items: center; justify-content: space-between; border: 0; color: #111; background: none; font-weight: 700; cursor: pointer; }.ji-prompt-card button i{font-size:20px;font-style:normal}
-.ji-prompts__toast { position: fixed; z-index: 200; left: 50%; bottom: 32px; padding: 11px 18px; transform: translateX(-50%); border-radius: 999px; color: #fff; background: rgba(7,7,7,.92); box-shadow: 0 10px 30px rgba(0,0,0,.18); font-size: 13px; white-space: nowrap; }
-@media(max-width:900px){.ji-prompts__grid{grid-template-columns:1fr 1fr}}
-@media(max-width:600px){.ji-prompts{padding:48px 0 60px}.ji-prompts__hero{margin-bottom:36px}.ji-prompts__hero h1{font-size:56px}.ji-prompts__hero p{padding:0 18px;line-height:1.7}.ji-prompts__filters{justify-content:flex-start;overflow-x:auto}.ji-prompts__filters button{flex:0 0 auto}.ji-prompts__grid{grid-template-columns:1fr}.ji-prompt-card{min-height:300px}}
+.ji-prompts__heading { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+.ji-prompts__heading h1 { margin: 0; font-size: clamp(28px, 2.08vw, 40px); line-height: 1.2; }
+.ji-prompts__heading p { margin: 8px 0 0; color: #374228; font-size: 14px; }
+.ji-prompts__grid { margin-top: clamp(30px, 2.383vw, 46px); display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: clamp(20px, 2.083vw, 40px); align-items: stretch; }
+.ji-prompts__empty { padding: 100px 0; color: #52613e; text-align: center; }
+
+@media (max-width: 1099px) {
+  .ji-prompts__toolbar { padding-top: 62px; }
+  .ji-prompts__mode { top: 0; }
+  .ji-prompts__search { top: 0; }
+  .ji-prompts__grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+
+@media (max-width: 600px) {
+  .ji-prompts { padding: 0; }
+  .ji-prompts__toolbar { padding-top: 58px; display: block; overflow: hidden; }
+  .ji-prompts__mode { top: 0; font-size: 12px; }
+  .ji-prompts__search { top: 0; padding: 9px 12px; }
+  .ji-prompts__search input { width: 102px; font-size: 12px; }
+  .ji-prompts__search svg { width: 16px; }
+  .ji-prompts__filters { padding-bottom: 4px; justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .ji-prompts__filters::-webkit-scrollbar { display: none; }
+  .ji-prompts__filters button { height: 38px; padding: 3px 15px; flex: 0 0 auto; }
+  .ji-prompts__heading { display: block; }
+  .ji-prompts__heading h1 { font-size: 28px; }
+  .ji-prompts__heading p { margin-top: 8px; line-height: 1.6; }
+  .ji-prompts__heading :deep(.ji-community-entry) { margin-top: 20px; }
+  .ji-prompts__grid { grid-template-columns: 1fr; gap: 20px; }
+}
 </style>

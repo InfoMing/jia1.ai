@@ -2,6 +2,19 @@ html.ji-overlay-open { overflow: hidden; }
 html, body, #app { margin: 0; min-height: 100%; }
 body { overflow-x: hidden; }
 
+/* 全站媒体加载占位：成功后自动清除，失败时保留主题背景且不显示破图图标。 */
+.ji-media-placeholder {
+  background-color: #f7ffec;
+  background-image: linear-gradient(110deg,transparent 20%,rgba(201,255,133,.6) 42%,rgba(255,255,255,.9) 50%,rgba(201,255,133,.35) 58%,transparent 80%),linear-gradient(145deg,#fafff5,#e8ffd2);
+  background-position: 180% 0,0 0;
+  background-size: 220% 100%,100% 100%;
+}
+.ji-media-placeholder.is-loading { animation: ji-media-shimmer 1.5s ease-in-out infinite; }
+.ji-media-placeholder.is-loaded { background-color: transparent; background-image: none; animation: none; }
+.ji-media-placeholder.is-error { color: transparent; background-position: 50% 50%; background-size: 100% 100%; animation: none; }
+@keyframes ji-media-shimmer { to { background-position: -120% 0,0 0; } }
+@media (prefers-reduced-motion: reduce) { .ji-media-placeholder.is-loading { animation: none; } }
+
 .ji-page, .ji-page * { box-sizing: border-box; }
 .ji-page {
   min-height: 100vh;
